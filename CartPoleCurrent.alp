@@ -1,0 +1,2393 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+*************************************************
+	         AnyLogic Project File 
+*************************************************	         
+-->
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.3.2.201807061735" AlpVersion="8.3.1">
+<Model>
+	<Id>1532438531942</Id>
+	<Name><![CDATA[CartPoleCurrent]]></Name>
+	<EngineVersion>6</EngineVersion>
+	<JavaPackageName><![CDATA[cartpole]]></JavaPackageName>
+	<ModelTimeUnit><![CDATA[Second]]></ModelTimeUnit>
+	<ActiveObjectClasses>
+		<!--   =========   Active Object Class   ========  -->
+		<ActiveObjectClass>
+			<Id>1532438531947</Id>
+			<Name><![CDATA[Main]]></Name>
+			<ClientAreaTopLeft><X>0</X><Y>0</Y></ClientAreaTopLeft>
+			<Import><![CDATA[import org.deeplearning4j.rl4j.space.ActionSpace;
+
+import java.io.IOException;
+import org.deeplearning4j.rl4j.space.Box;
+import org.deeplearning4j.rl4j.learning.sync.qlearning.QLearning;
+import org.deeplearning4j.rl4j.learning.sync.qlearning.discrete.QLearningDiscreteDense;
+import org.deeplearning4j.rl4j.mdp.gym.GymEnv;
+import org.deeplearning4j.rl4j.network.dqn.DQNFactoryStdDense;
+import org.deeplearning4j.rl4j.policy.DQNPolicy;
+import org.deeplearning4j.rl4j.space.DiscreteSpace;
+import org.deeplearning4j.rl4j.util.DataManager;
+import org.nd4j.linalg.learning.config.Adam;
+
+import java.util.logging.Logger;]]></Import>
+			<StartupCode><![CDATA[
+
+//loadCartpole(); TODO]]></StartupCode>
+			<Generic>true</Generic>
+			<GenericParameter>
+				<Id>1532438531946</Id>
+				<Name><![CDATA[1532438531946]]></Name>
+				<GenericParameterValue Class="CodeValue">
+					<Code><![CDATA[A extends Object]]></Code>
+				</GenericParameterValue>
+				<GenericParameterLabel><![CDATA[Generic parameter:]]></GenericParameterLabel>
+			</GenericParameter>
+			<GenericParameter>
+				<Id>1532524844660</Id>
+				<Name><![CDATA[1532524844660]]></Name>
+				<GenericParameterValue Class="CodeValue">
+					<Code><![CDATA[O extends Object]]></Code>
+				</GenericParameterValue>
+				<GenericParameterLabel><![CDATA[Generic parameter:]]></GenericParameterLabel>
+			</GenericParameter>
+			<GenericParameter>
+				<Id>1532524856155</Id>
+				<Name><![CDATA[1532524856155]]></Name>
+				<GenericParameterValue Class="CodeValue">
+					<Code><![CDATA[AS extends ActionSpace]]></Code>
+				</GenericParameterValue>
+				<GenericParameterLabel><![CDATA[Generic parameter:]]></GenericParameterLabel>
+			</GenericParameter>
+			<FlowChartsUsage>ENTITY</FlowChartsUsage>
+			<SamplesToKeep>100</SamplesToKeep>
+			<LimitNumberOfArrayElements>false</LimitNumberOfArrayElements>
+			<ElementsLimitValue>100</ElementsLimitValue>
+			<MakeDefaultViewArea>true</MakeDefaultViewArea>
+			<SceneGridColor/>
+			<SceneBackgroundColor/>
+			<AgentProperties>
+	 			<SpaceType>CONTINUOUS</SpaceType>			
+				<EnvironmentDefinesInitialLocation>true</EnvironmentDefinesInitialLocation>
+				<RotateAnimationTowardsMovement>true</RotateAnimationTowardsMovement>
+				<RotateAnimationVertically>false</RotateAnimationVertically>
+				<VelocityCode Class="CodeUnitValue">
+					<Code><![CDATA[10]]></Code>
+					<Unit Class="SpeedUnits"><![CDATA[MPS]]></Unit>
+				</VelocityCode>
+				<PhysicalLength Class="CodeUnitValue">
+					<Code><![CDATA[1]]></Code>
+					<Unit Class="LengthUnits"><![CDATA[METER]]></Unit>
+				</PhysicalLength>
+				<PhysicalWidth Class="CodeUnitValue">
+					<Code><![CDATA[1]]></Code>
+					<Unit Class="LengthUnits"><![CDATA[METER]]></Unit>
+				</PhysicalWidth>
+				<PhysicalHeight Class="CodeUnitValue">
+					<Code><![CDATA[1]]></Code>
+					<Unit Class="LengthUnits"><![CDATA[METER]]></Unit>
+				</PhysicalHeight>
+			</AgentProperties>
+			<EnvironmentProperties>
+					<EnableSteps>false</EnableSteps>
+					<StepDurationCode Class="CodeUnitValue">
+						<Code><![CDATA[1.0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
+					</StepDurationCode>
+					<SpaceType>DISCRETE</SpaceType>
+					<WidthCode><![CDATA[500]]></WidthCode>
+					<HeightCode><![CDATA[500]]></HeightCode>
+					<ZHeightCode><![CDATA[0]]></ZHeightCode>
+					<ColumnsCountCode><![CDATA[200]]></ColumnsCountCode>
+					<RowsCountCode><![CDATA[200]]></RowsCountCode>
+					<NeigborhoodType>MOORE</NeigborhoodType>
+					<LayoutType>RANDOM</LayoutType>
+					<LayoutTypeApplyOnStartup>true</LayoutTypeApplyOnStartup>
+					<NetworkType>USER_DEF</NetworkType>
+					<NetworkTypeApplyOnStartup>true</NetworkTypeApplyOnStartup>
+					<ConnectionsPerAgentCode><![CDATA[2]]></ConnectionsPerAgentCode>
+					<ConnectionsRangeCode><![CDATA[50]]></ConnectionsRangeCode>
+					<NeighborLinkFractionCode><![CDATA[0.95]]></NeighborLinkFractionCode>
+					<MCode><![CDATA[10]]></MCode>
+			</EnvironmentProperties>
+			<DatasetsCreationProperties>
+				<AutoCreate>true</AutoCreate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1532505600000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
+					</RecurrenceCode>
+			</DatasetsCreationProperties>
+			<ScaleRuler>
+				<Id>1532438531944</Id>
+				<Name><![CDATA[scale]]></Name>
+				<X>0</X><Y>-150</Y>
+				<PublicFlag>false</PublicFlag>
+				<PresentationFlag>false</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<Length>100</Length>
+				<Rotation>0</Rotation>
+				<ScaleType>BASED_ON_LENGTH</ScaleType>
+				<ModelLength>1</ModelLength>
+				<LengthUnits>METER</LengthUnits>
+				<Scale>10</Scale>
+				<InheritedFromParentAgentType>true</InheritedFromParentAgentType>
+			</ScaleRuler>
+			<ConnectionsId>1532438531943</ConnectionsId>
+			<Functions>
+				<Function AccessType="public" StaticFunction="false">
+					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+					<ReturnType><![CDATA[Mdp]]></ReturnType>
+					<Id>1532613991935</Id>
+					<Name><![CDATA[createMDP]]></Name>
+					<Description><![CDATA[This function creates an instance of the Mdp class and adds it to the population mdps inside Main. It is called in the CartPoleBegin class.]]></Description>
+					<X>-160</X><Y>60</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[add_mdps();
+Mdp myMdp = mdps.get(Main.this.mdps.size() - 1);
+return myMdp;]]></Body>
+				</Function>
+			</Functions>
+			<AgentLinks>
+				<AgentLink>
+					<Id>1532438531943</Id>
+					<Name><![CDATA[connections]]></Name>
+					<X>50</X><Y>-50</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<HandleReceiveInConnections>false</HandleReceiveInConnections>
+					<AgentLinkType>COLLECTION_OF_LINKS</AgentLinkType>
+					<AgentLinkBidirectional>true</AgentLinkBidirectional>
+					<MessageType><![CDATA[Object]]></MessageType>
+					<LineStyle>SOLID</LineStyle>
+					<LineWidth>1</LineWidth>
+					<LineColor>-16777216</LineColor>
+					<LineZOrder>UNDER_AGENTS</LineZOrder>
+					<LineArrow>NONE</LineArrow>
+					<LineArrowPosition>END</LineArrowPosition>
+				</AgentLink>
+			</AgentLinks>
+
+			<EmbeddedObjects>
+				<EmbeddedObject>
+					<Id>0</Id>
+					<Name><![CDATA[mdps]]></Name>
+					<X>-280</X><Y>60</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<PresentationId>1532943337696</PresentationId>
+					<ActiveObjectClass>
+						<PackageName><![CDATA[cartpole]]></PackageName>
+						<ClassName><![CDATA[Mdp]]></ClassName>
+					</ActiveObjectClass>
+					<GenericParameterSubstitute>
+						<GenericParameterSubstituteReference>
+							<PackageName><![CDATA[cartpole]]></PackageName>
+							<ClassName><![CDATA[Mdp]]></ClassName>
+							<ItemName><![CDATA[1532525340462]]></ItemName>
+						</GenericParameterSubstituteReference>
+					</GenericParameterSubstitute>
+					<GenericParameterSubstitute>
+						<GenericParameterSubstituteReference>
+							<PackageName><![CDATA[cartpole]]></PackageName>
+							<ClassName><![CDATA[Mdp]]></ClassName>
+							<ItemName><![CDATA[1532525354369]]></ItemName>
+						</GenericParameterSubstituteReference>
+					</GenericParameterSubstitute>
+					<GenericParameterSubstitute>
+						<GenericParameterSubstituteReference>
+							<PackageName><![CDATA[cartpole]]></PackageName>
+							<ClassName><![CDATA[Mdp]]></ClassName>
+							<ItemName><![CDATA[1532616185346]]></ItemName>
+						</GenericParameterSubstituteReference>
+					</GenericParameterSubstitute>
+					<Parameters>
+						<Parameter>
+							<Name><![CDATA[Gravity]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[Force_Mag]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[Tau]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[Displacement_Coef]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[xTreshold]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[thetaThreshold]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[Action_Space_Size]]></Name>
+						</Parameter>
+					</Parameters>
+					<ReplicationFlag>true</ReplicationFlag>
+					<Replication Class="CodeValue">
+						<Code><![CDATA[2]]></Code>
+					</Replication>
+					<CollectionType>ARRAY_LIST_BASED</CollectionType>
+					<InEnvironment>true</InEnvironment>	
+					<InitialSpeedCode Class="CodeUnitValue">
+						<Code><![CDATA[10]]></Code>
+						<Unit Class="SpeedUnits"><![CDATA[MPS]]></Unit>
+					</InitialSpeedCode>
+					<InitialLocationType>AT_ANIMATION_POSITION</InitialLocationType>
+					<XCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</XCode>
+					<YCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</YCode>
+					<ZCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</ZCode>
+					<ColumnCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</ColumnCode>
+					<RowCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</RowCode>
+					<LatitudeCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</LatitudeCode>
+					<LongitudeCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</LongitudeCode>
+					<LocationNameCode Class="CodeValue">
+						<Code><![CDATA[""]]></Code>
+					</LocationNameCode>
+					<InitializationType>EMPTY</InitializationType>
+					<InitializationDatabaseTableQuery>
+						<TableReference>
+						</TableReference>
+					</InitializationDatabaseTableQuery>
+					<InitializationDatabaseType>ONE_AGENT_PER_DATABASE_RECORD</InitializationDatabaseType>
+					<QuantityColumn>
+					</QuantityColumn>
+				</EmbeddedObject>
+			</EmbeddedObjects>
+
+			<Shapes>
+				<EmbeddedObjectPresentation>
+					<Id>1532943337696</Id>
+					<Name><![CDATA[mdps_presentation]]></Name>
+					<X>0</X><Y>0</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<DrawingMode>AGENT_CURRENT_POSITION</DrawingMode>
+					<ScaleType>AUTOMATICALLY_CALCULATED</ScaleType>
+					<GISScaleForRealEmbeddedObjectPresentationSize>1000</GISScaleForRealEmbeddedObjectPresentationSize>
+					<GISScaleForFixedEmbeddedObjectPresentationSize>1000000000</GISScaleForFixedEmbeddedObjectPresentationSize>
+					<Latitude>0.0</Latitude>
+					<Longitude>0.0</Longitude>
+				</EmbeddedObjectPresentation>
+			</Shapes>
+			<Controls>
+				<Control Type="Button">
+				 	<EmbeddedIcon>false</EmbeddedIcon>				
+					<Id>1532598481702</Id>
+					<Name><![CDATA[button]]></Name>
+					<X>100</X><Y>480</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<BasicProperties Width="100" Height="30">
+                        <EmbeddedIcon>false</EmbeddedIcon>	
+						<TextColor/>
+						<Enabled>true</Enabled>
+						<ActionCode><![CDATA[try{
+	CartPoleBegin.CartPoleBegin(Main.this);
+}catch(Exception e){
+ traceln("ERROR at START Button");
+}]]></ActionCode>
+					</BasicProperties>
+					<ExtendedProperties>
+						<Font Name="Dialog" Size="11" Style="0"/>
+						<LabelText><![CDATA[Start Training]]></LabelText>
+					</ExtendedProperties>
+				</Control>
+				<Control Type="Button">
+				 	<EmbeddedIcon>false</EmbeddedIcon>				
+					<Id>1533030926058</Id>
+					<Name><![CDATA[button1]]></Name>
+					<X>400</X><Y>480</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<BasicProperties Width="100" Height="30">
+                        <EmbeddedIcon>false</EmbeddedIcon>	
+						<TextColor/>
+						<Enabled>true</Enabled>
+						<ActionCode><![CDATA[try{
+	TrainedCartPole.loadCartpole(Main.this);
+}catch(Exception e){
+ traceln("ERROR at TRAINED Button");
+}
+]]></ActionCode>
+					</BasicProperties>
+					<ExtendedProperties>
+						<Font Name="Dialog" Size="11" Style="0"/>
+						<LabelText><![CDATA[Trained Cart]]></LabelText>
+					</ExtendedProperties>
+				</Control>
+				<Control Type="Button">
+				 	<EmbeddedIcon>false</EmbeddedIcon>				
+					<Id>1533031140935</Id>
+					<Name><![CDATA[button2]]></Name>
+					<Description><![CDATA[A button to finish the simultation if we wish.]]></Description>
+					<X>700</X><Y>480</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<BasicProperties Width="100" Height="30">
+                        <EmbeddedIcon>false</EmbeddedIcon>	
+						<TextColor/>
+						<Enabled>true</Enabled>
+						<ActionCode><![CDATA[finishSimulation();]]></ActionCode>
+					</BasicProperties>
+					<ExtendedProperties>
+						<Font Name="Dialog" Size="11" Style="0"/>
+						<LabelText><![CDATA[Exit]]></LabelText>
+					</ExtendedProperties>
+				</Control>
+			</Controls>
+
+		</ActiveObjectClass>
+		<!--   =========   Active Object Class   ========  -->
+		<ActiveObjectClass>
+			<Id>1532440317942</Id>
+			<Name><![CDATA[Cart]]></Name>
+			<ClientAreaTopLeft><X>0</X><Y>0</Y></ClientAreaTopLeft>
+			<Generic>false</Generic>
+			<GenericParameter>
+				<Id>1532440317941</Id>
+				<Name><![CDATA[1532440317941]]></Name>
+				<GenericParameterValue Class="CodeValue">
+					<Code><![CDATA[T extends Agent]]></Code>
+				</GenericParameterValue>
+				<GenericParameterLabel><![CDATA[Generic parameter:]]></GenericParameterLabel>
+			</GenericParameter>
+			<FlowChartsUsage>ENTITY</FlowChartsUsage>
+			<SamplesToKeep>100</SamplesToKeep>
+			<LimitNumberOfArrayElements>false</LimitNumberOfArrayElements>
+			<ElementsLimitValue>100</ElementsLimitValue>
+			<MakeDefaultViewArea>true</MakeDefaultViewArea>
+			<SceneGridColor/>
+			<SceneBackgroundColor/>
+			<AgentProperties>
+	 			<SpaceType>CONTINUOUS</SpaceType>			
+				<EnvironmentDefinesInitialLocation>true</EnvironmentDefinesInitialLocation>
+				<RotateAnimationTowardsMovement>true</RotateAnimationTowardsMovement>
+				<RotateAnimationVertically>false</RotateAnimationVertically>
+				<VelocityCode Class="CodeUnitValue">
+					<Code><![CDATA[10]]></Code>
+					<Unit Class="SpeedUnits"><![CDATA[MPS]]></Unit>
+				</VelocityCode>
+				<PhysicalLength Class="CodeUnitValue">
+					<Code><![CDATA[1]]></Code>
+					<Unit Class="LengthUnits"><![CDATA[METER]]></Unit>
+				</PhysicalLength>
+				<PhysicalWidth Class="CodeUnitValue">
+					<Code><![CDATA[1]]></Code>
+					<Unit Class="LengthUnits"><![CDATA[METER]]></Unit>
+				</PhysicalWidth>
+				<PhysicalHeight Class="CodeUnitValue">
+					<Code><![CDATA[1]]></Code>
+					<Unit Class="LengthUnits"><![CDATA[METER]]></Unit>
+				</PhysicalHeight>
+			</AgentProperties>
+			<EnvironmentProperties>
+					<EnableSteps>false</EnableSteps>
+					<StepDurationCode Class="CodeUnitValue">
+						<Code><![CDATA[1.0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
+					</StepDurationCode>
+					<SpaceType>CONTINUOUS</SpaceType>
+					<WidthCode><![CDATA[500]]></WidthCode>
+					<HeightCode><![CDATA[500]]></HeightCode>
+					<ZHeightCode><![CDATA[0]]></ZHeightCode>
+					<ColumnsCountCode><![CDATA[100]]></ColumnsCountCode>
+					<RowsCountCode><![CDATA[100]]></RowsCountCode>
+					<NeigborhoodType>MOORE</NeigborhoodType>
+					<LayoutType>USER_DEF</LayoutType>
+					<LayoutTypeApplyOnStartup>true</LayoutTypeApplyOnStartup>
+					<NetworkType>USER_DEF</NetworkType>
+					<NetworkTypeApplyOnStartup>true</NetworkTypeApplyOnStartup>
+					<ConnectionsPerAgentCode><![CDATA[2]]></ConnectionsPerAgentCode>
+					<ConnectionsRangeCode><![CDATA[50]]></ConnectionsRangeCode>
+					<NeighborLinkFractionCode><![CDATA[0.95]]></NeighborLinkFractionCode>
+					<MCode><![CDATA[10]]></MCode>
+			</EnvironmentProperties>
+			<DatasetsCreationProperties>
+				<AutoCreate>true</AutoCreate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1532505600000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
+					</RecurrenceCode>
+			</DatasetsCreationProperties>
+			<ScaleRuler>
+				<Id>1532440317939</Id>
+				<Name><![CDATA[scale]]></Name>
+				<X>0</X><Y>-150</Y>
+				<PublicFlag>false</PublicFlag>
+				<PresentationFlag>false</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<Length>100</Length>
+				<Rotation>0</Rotation>
+				<ScaleType>BASED_ON_LENGTH</ScaleType>
+				<ModelLength>1</ModelLength>
+				<LengthUnits>METER</LengthUnits>
+				<Scale>10</Scale>
+				<InheritedFromParentAgentType>true</InheritedFromParentAgentType>
+			</ScaleRuler>
+			<ConnectionsId>1532440317938</ConnectionsId>
+			<Variables>
+				<Variable Class="Parameter">
+					<Id>1532959674137</Id>
+					<Name><![CDATA[Mass_Cart]]></Name>
+					<Description><![CDATA[The mass of the cart]]></Description>
+					<X>250</X><Y>-110</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[double]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<DefaultValue Class="CodeValue">
+							<Code><![CDATA[1]]></Code>
+						</DefaultValue>
+						<ParameterEditor>
+							<Id>1532959674135</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1532963218593</Id>
+					<Name><![CDATA[Total_Mass]]></Name>
+					<Description><![CDATA[The mass of the cart plus that of the pole]]></Description>
+					<X>250</X><Y>-80</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[double]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<DefaultValue Class="CodeValue">
+							<Code><![CDATA[Mass_Cart+pole.Mass_Pole]]></Code>
+						</DefaultValue>
+						<ParameterEditor>
+							<Id>1532963218591</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+			</Variables>
+			<AgentLinks>
+				<AgentLink>
+					<Id>1532440317938</Id>
+					<Name><![CDATA[connections]]></Name>
+					<X>50</X><Y>-50</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<HandleReceiveInConnections>false</HandleReceiveInConnections>
+					<AgentLinkType>COLLECTION_OF_LINKS</AgentLinkType>
+					<AgentLinkBidirectional>true</AgentLinkBidirectional>
+					<MessageType><![CDATA[Object]]></MessageType>
+					<LineStyle>SOLID</LineStyle>
+					<LineWidth>1</LineWidth>
+					<LineColor>-16777216</LineColor>
+					<LineZOrder>UNDER_AGENTS</LineZOrder>
+					<LineArrow>NONE</LineArrow>
+					<LineArrowPosition>END</LineArrowPosition>
+				</AgentLink>
+			</AgentLinks>
+
+			<ContainerLinks>
+				<ContainerLink>
+					<Id>1532440317969</Id>
+					<Name><![CDATA[main]]></Name>
+					<X>50</X><Y>-100</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<ActiveObjectClass>
+						<PackageName><![CDATA[cartpole]]></PackageName>
+						<ClassName><![CDATA[Main]]></ClassName>
+					</ActiveObjectClass>
+				</ContainerLink>
+				<ContainerLink>
+					<Id>1532598849018</Id>
+					<Name><![CDATA[mdp]]></Name>
+					<X>150</X><Y>-100</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<ActiveObjectClass>
+						<PackageName><![CDATA[cartpole]]></PackageName>
+						<ClassName><![CDATA[Mdp]]></ClassName>
+					</ActiveObjectClass>
+				</ContainerLink>
+			</ContainerLinks>
+			<EmbeddedObjects>
+				<EmbeddedObject>
+					<Id>1532441789141</Id>
+					<Name><![CDATA[pole]]></Name>
+					<X>-180</X><Y>50</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<PresentationId>1532441792257</PresentationId>
+					<ActiveObjectClass>
+						<PackageName><![CDATA[cartpole]]></PackageName>
+						<ClassName><![CDATA[Pole]]></ClassName>
+					</ActiveObjectClass>
+					<GenericParameterSubstitute>
+						<GenericParameterSubstituteReference>
+							<PackageName><![CDATA[cartpole]]></PackageName>
+							<ClassName><![CDATA[Pole]]></ClassName>
+							<ItemName><![CDATA[1532440773837]]></ItemName>
+						</GenericParameterSubstituteReference>
+					</GenericParameterSubstitute>
+					<Parameters>
+						<Parameter>
+							<Name><![CDATA[Mass_Pole]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[Pole_Length]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[Pole_Mass_Length]]></Name>
+						</Parameter>
+					</Parameters>
+					<ReplicationFlag>false</ReplicationFlag>
+					<Replication Class="CodeValue">
+						<Code><![CDATA[100]]></Code>
+					</Replication>
+					<CollectionType>ARRAY_LIST_BASED</CollectionType>
+					<InEnvironment>true</InEnvironment>	
+					<InitialSpeedCode Class="CodeUnitValue">
+						<Code><![CDATA[10]]></Code>
+						<Unit Class="SpeedUnits"><![CDATA[MPS]]></Unit>
+					</InitialSpeedCode>
+					<InitialLocationType>AT_ANIMATION_POSITION</InitialLocationType>
+					<XCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</XCode>
+					<YCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</YCode>
+					<ZCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</ZCode>
+					<ColumnCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</ColumnCode>
+					<RowCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</RowCode>
+					<LatitudeCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</LatitudeCode>
+					<LongitudeCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</LongitudeCode>
+					<LocationNameCode Class="CodeValue">
+						<Code><![CDATA[""]]></Code>
+					</LocationNameCode>
+					<InitializationType>SPECIFIED_NUMBER</InitializationType>
+					<InitializationDatabaseTableQuery>
+						<TableReference>
+						</TableReference>
+					</InitializationDatabaseTableQuery>
+					<InitializationDatabaseType>ONE_AGENT_PER_DATABASE_RECORD</InitializationDatabaseType>
+					<QuantityColumn>
+					</QuantityColumn>
+				</EmbeddedObject>
+			</EmbeddedObjects>
+
+			<Shapes>
+				<EmbeddedObjectPresentation>
+					<Id>1532441792257</Id>
+					<Name><![CDATA[pole_presentation]]></Name>
+					<X>0</X><Y>0</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<DrawingMode>AGENT_CURRENT_POSITION</DrawingMode>
+					<ScaleType>AUTOMATICALLY_CALCULATED</ScaleType>
+					<GISScaleForRealEmbeddedObjectPresentationSize>1000</GISScaleForRealEmbeddedObjectPresentationSize>
+					<GISScaleForFixedEmbeddedObjectPresentationSize>1000000000</GISScaleForFixedEmbeddedObjectPresentationSize>
+					<Latitude>0.0</Latitude>
+					<Longitude>0.0</Longitude>
+				</EmbeddedObjectPresentation>
+				<Group>
+					<Id>1532508137666</Id>
+					<Name><![CDATA[group]]></Name>
+					<X>0</X><Y>0</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+
+			<Shapes>
+				<Rectangle>
+					<Id>1532440337163</Id>
+					<Name><![CDATA[rectangle]]></Name>
+					<X>-40</X><Y>-20</Y>
+					<Label><X>10</X><Y>10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<ZHeight>10</ZHeight>
+					<LineWidth>1</LineWidth>
+					<LineColor>-16777216</LineColor>
+					<LineMaterial>null</LineMaterial>
+					<LineStyle>SOLID</LineStyle>
+					<Width>80</Width>
+					<Height>40</Height>
+					<Rotation>0.0</Rotation>
+					<FillColor>-10496</FillColor>
+					<FillMaterial>null</FillMaterial>
+				</Rectangle>
+				<Oval>
+					<Id>1532440365609</Id>
+					<Name><![CDATA[oval]]></Name>
+					<X>-30</X><Y>20</Y>
+					<Label><X>0</X><Y>0</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<ZHeight>10</ZHeight>
+					<LineWidth>1</LineWidth>
+					<LineColor>-16777216</LineColor>
+					<LineMaterial>null</LineMaterial>
+					<LineStyle>SOLID</LineStyle>
+					<RadiusX>7.5</RadiusX>
+					<RadiusY>40</RadiusY>
+					<Rotation>0.0</Rotation>
+					<FillColor>-16777216</FillColor>
+					<FillMaterial>null</FillMaterial>
+				</Oval>
+				<Oval>
+					<Id>1532440373582</Id>
+					<Name><![CDATA[oval1]]></Name>
+					<X>30</X><Y>20</Y>
+					<Label><X>0</X><Y>0</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<ZHeight>10</ZHeight>
+					<LineWidth>1</LineWidth>
+					<LineColor>-16777216</LineColor>
+					<LineMaterial>null</LineMaterial>
+					<LineStyle>SOLID</LineStyle>
+					<RadiusX>7.5</RadiusX>
+					<RadiusY>40</RadiusY>
+					<Rotation>0.0</Rotation>
+					<FillColor>-16777216</FillColor>
+					<FillMaterial>null</FillMaterial>
+				</Oval>
+			</Shapes>
+
+				</Group>
+			</Shapes>
+
+		</ActiveObjectClass>
+		<!--   =========   Active Object Class   ========  -->
+		<ActiveObjectClass>
+			<Id>1532440773838</Id>
+			<Name><![CDATA[Pole]]></Name>
+			<ClientAreaTopLeft><X>0</X><Y>0</Y></ClientAreaTopLeft>
+			<Generic>false</Generic>
+			<GenericParameter>
+				<Id>1532440773837</Id>
+				<Name><![CDATA[1532440773837]]></Name>
+				<GenericParameterValue Class="CodeValue">
+					<Code><![CDATA[T extends Agent]]></Code>
+				</GenericParameterValue>
+				<GenericParameterLabel><![CDATA[Generic parameter:]]></GenericParameterLabel>
+			</GenericParameter>
+			<FlowChartsUsage>ENTITY</FlowChartsUsage>
+			<SamplesToKeep>100</SamplesToKeep>
+			<LimitNumberOfArrayElements>false</LimitNumberOfArrayElements>
+			<ElementsLimitValue>100</ElementsLimitValue>
+			<MakeDefaultViewArea>true</MakeDefaultViewArea>
+			<SceneGridColor/>
+			<SceneBackgroundColor/>
+			<AgentProperties>
+	 			<SpaceType>CONTINUOUS</SpaceType>			
+				<EnvironmentDefinesInitialLocation>true</EnvironmentDefinesInitialLocation>
+				<RotateAnimationTowardsMovement>true</RotateAnimationTowardsMovement>
+				<RotateAnimationVertically>false</RotateAnimationVertically>
+				<VelocityCode Class="CodeUnitValue">
+					<Code><![CDATA[10]]></Code>
+					<Unit Class="SpeedUnits"><![CDATA[MPS]]></Unit>
+				</VelocityCode>
+				<PhysicalLength Class="CodeUnitValue">
+					<Code><![CDATA[1]]></Code>
+					<Unit Class="LengthUnits"><![CDATA[METER]]></Unit>
+				</PhysicalLength>
+				<PhysicalWidth Class="CodeUnitValue">
+					<Code><![CDATA[1]]></Code>
+					<Unit Class="LengthUnits"><![CDATA[METER]]></Unit>
+				</PhysicalWidth>
+				<PhysicalHeight Class="CodeUnitValue">
+					<Code><![CDATA[1]]></Code>
+					<Unit Class="LengthUnits"><![CDATA[METER]]></Unit>
+				</PhysicalHeight>
+			</AgentProperties>
+			<EnvironmentProperties>
+					<EnableSteps>false</EnableSteps>
+					<StepDurationCode Class="CodeUnitValue">
+						<Code><![CDATA[1.0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
+					</StepDurationCode>
+					<SpaceType>CONTINUOUS</SpaceType>
+					<WidthCode><![CDATA[500]]></WidthCode>
+					<HeightCode><![CDATA[500]]></HeightCode>
+					<ZHeightCode><![CDATA[0]]></ZHeightCode>
+					<ColumnsCountCode><![CDATA[100]]></ColumnsCountCode>
+					<RowsCountCode><![CDATA[100]]></RowsCountCode>
+					<NeigborhoodType>MOORE</NeigborhoodType>
+					<LayoutType>USER_DEF</LayoutType>
+					<LayoutTypeApplyOnStartup>true</LayoutTypeApplyOnStartup>
+					<NetworkType>USER_DEF</NetworkType>
+					<NetworkTypeApplyOnStartup>true</NetworkTypeApplyOnStartup>
+					<ConnectionsPerAgentCode><![CDATA[2]]></ConnectionsPerAgentCode>
+					<ConnectionsRangeCode><![CDATA[50]]></ConnectionsRangeCode>
+					<NeighborLinkFractionCode><![CDATA[0.95]]></NeighborLinkFractionCode>
+					<MCode><![CDATA[10]]></MCode>
+			</EnvironmentProperties>
+			<DatasetsCreationProperties>
+				<AutoCreate>true</AutoCreate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1532505600000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
+					</RecurrenceCode>
+			</DatasetsCreationProperties>
+			<ScaleRuler>
+				<Id>1532440773835</Id>
+				<Name><![CDATA[scale]]></Name>
+				<X>0</X><Y>-150</Y>
+				<PublicFlag>false</PublicFlag>
+				<PresentationFlag>false</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<Length>100</Length>
+				<Rotation>0</Rotation>
+				<ScaleType>BASED_ON_LENGTH</ScaleType>
+				<ModelLength>1</ModelLength>
+				<LengthUnits>METER</LengthUnits>
+				<Scale>10</Scale>
+				<InheritedFromParentAgentType>true</InheritedFromParentAgentType>
+			</ScaleRuler>
+			<ConnectionsId>1532440773834</ConnectionsId>
+			<Variables>
+				<Variable Class="Parameter">
+					<Id>1532963264777</Id>
+					<Name><![CDATA[Mass_Pole]]></Name>
+					<Description><![CDATA[Mass of the pole]]></Description>
+					<X>370</X><Y>-100</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[double]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<DefaultValue Class="CodeValue">
+							<Code><![CDATA[0.1]]></Code>
+						</DefaultValue>
+						<ParameterEditor>
+							<Id>1532963264775</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1532963268728</Id>
+					<Name><![CDATA[Pole_Length]]></Name>
+					<Description><![CDATA[Length of the pole]]></Description>
+					<X>370</X><Y>-70</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[double]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<DefaultValue Class="CodeValue">
+							<Code><![CDATA[0.5]]></Code>
+						</DefaultValue>
+						<ParameterEditor>
+							<Id>1532963268726</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1532963301650</Id>
+					<Name><![CDATA[Pole_Mass_Length]]></Name>
+					<Description><![CDATA[Product of mass and length of the pole. Used inside physicalStep]]></Description>
+					<X>370</X><Y>-40</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[double]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<DefaultValue Class="CodeValue">
+							<Code><![CDATA[Mass_Pole*Pole_Length]]></Code>
+						</DefaultValue>
+						<ParameterEditor>
+							<Id>1532963301648</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+			</Variables>
+			<AgentLinks>
+				<AgentLink>
+					<Id>1532440773834</Id>
+					<Name><![CDATA[connections]]></Name>
+					<X>50</X><Y>-50</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<HandleReceiveInConnections>false</HandleReceiveInConnections>
+					<AgentLinkType>COLLECTION_OF_LINKS</AgentLinkType>
+					<AgentLinkBidirectional>true</AgentLinkBidirectional>
+					<MessageType><![CDATA[Object]]></MessageType>
+					<LineStyle>SOLID</LineStyle>
+					<LineWidth>1</LineWidth>
+					<LineColor>-16777216</LineColor>
+					<LineZOrder>UNDER_AGENTS</LineZOrder>
+					<LineArrow>NONE</LineArrow>
+					<LineArrowPosition>END</LineArrowPosition>
+				</AgentLink>
+			</AgentLinks>
+
+			<ContainerLinks>
+				<ContainerLink>
+					<Id>1532440773857</Id>
+					<Name><![CDATA[main]]></Name>
+					<X>50</X><Y>-100</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<ActiveObjectClass>
+						<PackageName><![CDATA[cartpole]]></PackageName>
+						<ClassName><![CDATA[Main]]></ClassName>
+					</ActiveObjectClass>
+				</ContainerLink>
+				<ContainerLink>
+					<Id>1532441789147</Id>
+					<Name><![CDATA[cart]]></Name>
+					<X>150</X><Y>-100</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<ActiveObjectClass>
+						<PackageName><![CDATA[cartpole]]></PackageName>
+						<ClassName><![CDATA[Cart]]></ClassName>
+					</ActiveObjectClass>
+				</ContainerLink>
+				<ContainerLink>
+					<Id>1532598849019</Id>
+					<Name><![CDATA[mdp]]></Name>
+					<X>250</X><Y>-100</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<ActiveObjectClass>
+						<PackageName><![CDATA[cartpole]]></PackageName>
+						<ClassName><![CDATA[Mdp]]></ClassName>
+					</ActiveObjectClass>
+				</ContainerLink>
+			</ContainerLinks>
+
+			<Shapes>
+				<Line>
+					<Id>1532441174571</Id>
+					<Name><![CDATA[line]]></Name>
+					<Description><![CDATA[The pole agent lives inside the cart agent. Together they form the Mdp agent. The angle of the cart is defined by the state variable theta of the Mdp agent.]]></Description>
+					<X>0</X><Y>0</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<ZHeight>10</ZHeight>
+					<LineWidth>8</LineWidth>
+					<LineColor>-16777216</LineColor>
+					<LineMaterial>null</LineMaterial>
+					<LineStyle>SOLID</LineStyle>
+					<BeginArrowSize>1</BeginArrowSize>
+					<BeginArrowStyle>0</BeginArrowStyle>
+					<EndArrowSize>1</EndArrowSize>
+					<EndArrowStyle>0</EndArrowStyle>
+					<RotationCode><![CDATA[mdp.theta]]></RotationCode>
+					<Dx>0</Dx>
+					<Dy>-100</Dy>
+					<Dz>0</Dz>
+				</Line>
+			</Shapes>
+
+		</ActiveObjectClass>
+		<!--   =========   Active Object Class   ========  -->
+		<ActiveObjectClass>
+			<Id>1532521526631</Id>
+			<Name><![CDATA[Mdp]]></Name>
+			<ClientAreaTopLeft><X>0</X><Y>0</Y></ClientAreaTopLeft>
+			<Import><![CDATA[import org.deeplearning4j.rl4j.mdp.MDP;
+import org.deeplearning4j.rl4j.space.*;
+import org.deeplearning4j.rl4j.space.ActionSpace;
+import org.deeplearning4j.rl4j.space.ObservationSpace;
+import org.nd4j.linalg.factory.Nd4j;
+import org.nd4j.linalg.api.ndarray.INDArray;
+import cartpole.CartPoleObservationSpace;
+import org.deeplearning4j.gym.StepReply;
+import org.bytedeco.javacv.FrameGrabber.Array;
+import org.json.JSONObject;
+import com.anylogic.libraries.processmodeling.Conveyor.OnExit;]]></Import>
+			<Implements><![CDATA[MDP]]></Implements>
+			<Generic>true</Generic>
+			<GenericParameter>
+				<Id>1532525340462</Id>
+				<Name><![CDATA[1532525340462]]></Name>
+				<GenericParameterValue Class="CodeValue">
+					<Code><![CDATA[A extends Object]]></Code>
+				</GenericParameterValue>
+				<GenericParameterLabel><![CDATA[Generic parameter:]]></GenericParameterLabel>
+			</GenericParameter>
+			<GenericParameter>
+				<Id>1532525354369</Id>
+				<Name><![CDATA[1532525354369]]></Name>
+				<GenericParameterValue Class="CodeValue">
+					<Code><![CDATA[AS extends ActionSpace]]></Code>
+				</GenericParameterValue>
+				<GenericParameterLabel><![CDATA[Generic parameter:]]></GenericParameterLabel>
+			</GenericParameter>
+			<GenericParameter>
+				<Id>1532616185346</Id>
+				<Name><![CDATA[1532616185346]]></Name>
+				<GenericParameterValue Class="CodeValue">
+					<Code><![CDATA[O extends Object]]></Code>
+				</GenericParameterValue>
+				<GenericParameterLabel><![CDATA[Generic parameter:]]></GenericParameterLabel>
+			</GenericParameter>
+			<FlowChartsUsage>ENTITY</FlowChartsUsage>
+			<SamplesToKeep>100</SamplesToKeep>
+			<LimitNumberOfArrayElements>false</LimitNumberOfArrayElements>
+			<ElementsLimitValue>100</ElementsLimitValue>
+			<MakeDefaultViewArea>true</MakeDefaultViewArea>
+			<SceneGridColor/>
+			<SceneBackgroundColor/>
+			<AgentProperties>
+	 			<SpaceType>CONTINUOUS</SpaceType>			
+				<EnvironmentDefinesInitialLocation>true</EnvironmentDefinesInitialLocation>
+				<RotateAnimationTowardsMovement>true</RotateAnimationTowardsMovement>
+				<RotateAnimationVertically>false</RotateAnimationVertically>
+				<VelocityCode Class="CodeUnitValue">
+					<Code><![CDATA[10]]></Code>
+					<Unit Class="SpeedUnits"><![CDATA[MPS]]></Unit>
+				</VelocityCode>
+				<PhysicalLength Class="CodeUnitValue">
+					<Code><![CDATA[1]]></Code>
+					<Unit Class="LengthUnits"><![CDATA[METER]]></Unit>
+				</PhysicalLength>
+				<PhysicalWidth Class="CodeUnitValue">
+					<Code><![CDATA[1]]></Code>
+					<Unit Class="LengthUnits"><![CDATA[METER]]></Unit>
+				</PhysicalWidth>
+				<PhysicalHeight Class="CodeUnitValue">
+					<Code><![CDATA[1]]></Code>
+					<Unit Class="LengthUnits"><![CDATA[METER]]></Unit>
+				</PhysicalHeight>
+			</AgentProperties>
+			<EnvironmentProperties>
+					<EnableSteps>false</EnableSteps>
+					<StepDurationCode Class="CodeUnitValue">
+						<Code><![CDATA[1.0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
+					</StepDurationCode>
+					<SpaceType>CONTINUOUS</SpaceType>
+					<WidthCode><![CDATA[500]]></WidthCode>
+					<HeightCode><![CDATA[500]]></HeightCode>
+					<ZHeightCode><![CDATA[0]]></ZHeightCode>
+					<ColumnsCountCode><![CDATA[100]]></ColumnsCountCode>
+					<RowsCountCode><![CDATA[100]]></RowsCountCode>
+					<NeigborhoodType>MOORE</NeigborhoodType>
+					<LayoutType>USER_DEF</LayoutType>
+					<LayoutTypeApplyOnStartup>true</LayoutTypeApplyOnStartup>
+					<NetworkType>USER_DEF</NetworkType>
+					<NetworkTypeApplyOnStartup>true</NetworkTypeApplyOnStartup>
+					<ConnectionsPerAgentCode><![CDATA[2]]></ConnectionsPerAgentCode>
+					<ConnectionsRangeCode><![CDATA[50]]></ConnectionsRangeCode>
+					<NeighborLinkFractionCode><![CDATA[0.95]]></NeighborLinkFractionCode>
+					<MCode><![CDATA[10]]></MCode>
+			</EnvironmentProperties>
+			<DatasetsCreationProperties>
+				<AutoCreate>true</AutoCreate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1532592000000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
+					</RecurrenceCode>
+			</DatasetsCreationProperties>
+			<ScaleRuler>
+				<Id>1532521526628</Id>
+				<Name><![CDATA[scale]]></Name>
+				<X>0</X><Y>-150</Y>
+				<PublicFlag>false</PublicFlag>
+				<PresentationFlag>false</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<Length>100</Length>
+				<Rotation>0</Rotation>
+				<ScaleType>BASED_ON_LENGTH</ScaleType>
+				<ModelLength>1</ModelLength>
+				<LengthUnits>METER</LengthUnits>
+				<Scale>10</Scale>
+				<InheritedFromParentAgentType>true</InheritedFromParentAgentType>
+			</ScaleRuler>
+			<ConnectionsId>1532521526627</ConnectionsId>
+			<Variables>
+				<Variable Class="PlainVariable">
+					<Id>1532525805562</Id>
+					<Name><![CDATA[x]]></Name>
+					<X>-350</X><Y>120</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1532525805564</Id>
+					<Name><![CDATA[xDot]]></Name>
+					<X>-350</X><Y>160</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1532525805566</Id>
+					<Name><![CDATA[theta]]></Name>
+					<X>-350</X><Y>200</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1532525805568</Id>
+					<Name><![CDATA[thetaDot]]></Name>
+					<X>-350</X><Y>240</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1532525805570</Id>
+					<Name><![CDATA[cosTheta]]></Name>
+					<X>-330</X><Y>340</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1532525805572</Id>
+					<Name><![CDATA[sinTheta]]></Name>
+					<X>-330</X><Y>370</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1532525805574</Id>
+					<Name><![CDATA[force]]></Name>
+					<X>-430</X><Y>340</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1532525805576</Id>
+					<Name><![CDATA[temp]]></Name>
+					<X>-430</X><Y>380</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1532525805578</Id>
+					<Name><![CDATA[thetaAcc]]></Name>
+					<X>-430</X><Y>420</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1532525805580</Id>
+					<Name><![CDATA[xAcc]]></Name>
+					<X>-430</X><Y>460</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1532962153915</Id>
+					<Name><![CDATA[Iteration]]></Name>
+					<X>-430</X><Y>540</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[int]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[1]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1532962283181</Id>
+					<Name><![CDATA[Epoch]]></Name>
+					<X>-330</X><Y>540</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[int]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1532963841804</Id>
+					<Name><![CDATA[Gravity]]></Name>
+					<Description><![CDATA[The gravitational constant]]></Description>
+					<X>440</X><Y>-130</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[double]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<DefaultValue Class="CodeValue">
+							<Code><![CDATA[9.8]]></Code>
+						</DefaultValue>
+						<ParameterEditor>
+							<Id>1532963841802</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1532963855494</Id>
+					<Name><![CDATA[Force_Mag]]></Name>
+					<Description><![CDATA[Factor magnifying action to convert into force applied to cart]]></Description>
+					<X>440</X><Y>-100</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[double]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<DefaultValue Class="CodeValue">
+							<Code><![CDATA[10]]></Code>
+						</DefaultValue>
+						<ParameterEditor>
+							<Id>1532963855492</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1532963924794</Id>
+					<Name><![CDATA[Tau]]></Name>
+					<Description><![CDATA[Time-parameter used to update state variables in a physically realistic fashion]]></Description>
+					<X>440</X><Y>-70</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[double]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<DefaultValue Class="CodeValue">
+							<Code><![CDATA[0.02]]></Code>
+						</DefaultValue>
+						<ParameterEditor>
+							<Id>1532963924792</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1532963924797</Id>
+					<Name><![CDATA[Displacement_Coef]]></Name>
+					<Description><![CDATA[Magnify the rendered movement of the cart to make its movements visible]]></Description>
+					<X>440</X><Y>-40</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[double]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<DefaultValue Class="CodeValue">
+							<Code><![CDATA[100]]></Code>
+						</DefaultValue>
+						<ParameterEditor>
+							<Id>1532963924795</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1532964219188</Id>
+					<Name><![CDATA[xTreshold]]></Name>
+					<Description><![CDATA[Threshold value of x (the position of the cart)]]></Description>
+					<X>580</X><Y>-130</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[double]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<DefaultValue Class="CodeValue">
+							<Code><![CDATA[2.4]]></Code>
+						</DefaultValue>
+						<ParameterEditor>
+							<Id>1532964219186</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1532964224189</Id>
+					<Name><![CDATA[thetaThreshold]]></Name>
+					<Description><![CDATA[Threshold value of theta (the angle of the pole)]]></Description>
+					<X>580</X><Y>-100</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[double]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<DefaultValue Class="CodeValue">
+							<Code><![CDATA[12 * 2 * PI / 360]]></Code>
+						</DefaultValue>
+						<ParameterEditor>
+							<Id>1532964224187</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1532964226696</Id>
+					<Name><![CDATA[Action_Space_Size]]></Name>
+					<Description><![CDATA[The number of available actions in our environment. Must be type Int!!!]]></Description>
+					<X>580</X><Y>-70</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[int]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<DefaultValue Class="CodeValue">
+							<Code><![CDATA[2]]></Code>
+						</DefaultValue>
+						<ParameterEditor>
+							<Id>1532964226694</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+			</Variables>
+			<Functions>
+				<Function AccessType="public" StaticFunction="false">
+					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+					<ReturnType><![CDATA[ObservationSpace<O>]]></ReturnType>
+					<Id>1532521735433</Id>
+					<Name><![CDATA[getObservationSpace]]></Name>
+					<Description><![CDATA[Here we are using the CartPoleObservationSpace class we created in order to create a representation of the observation space which will be understood by DL4J. .]]></Description>
+					<X>-720</X><Y>160</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[traceln("A representation of the observation space is created");
+CartPoleObservationSpace os = new CartPoleObservationSpace(xTreshold, thetaThreshold);
+return os;]]></Body>
+				</Function>
+				<Function AccessType="public" StaticFunction="false">
+					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+					<ReturnType><![CDATA[AS]]></ReturnType>
+					<Id>1532521757529</Id>
+					<Name><![CDATA[getActionSpace]]></Name>
+					<Description><![CDATA[Here we are using the DiscreteSpace class from DL4J to create an ActionSpace object. ActionSpace will contain not only the size of the action space (2) but also a seed and a random action sampled from the action space which may be used for exploration.]]></Description>
+					<X>-720</X><Y>190</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[traceln("A representation of the space of available actions is created");
+ActionSpace as = new DiscreteSpace(Action_Space_Size);
+return (AS) as;]]></Body>
+				</Function>
+				<Function AccessType="public" StaticFunction="false">
+					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+					<ReturnType><![CDATA[StepReply]]></ReturnType>
+					<Id>1532521779566</Id>
+					<Name><![CDATA[step]]></Name>
+					<Description><![CDATA[DL4J expects the StepReply (i.e. the information about the consequences of having taken the instructed action) to come in the certain format. For this we are using the StepReply class from DL4J which takes as inputs an observation (created using the ObservationEnc class we created, the reward (which is always equal to 1 in the cartpole example), and the boolean variable "done" which signifies whether or not the current epoch is over (it is over if the pole fell or we are outside the threshold for x). The object "info" is required as input by stepReply but not needed for our project since it is used for interfacing with Python which we do not do. Hence it is left empty.]]></Description>
+					<X>-720</X><Y>220</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[action]]></Name>
+						<Type><![CDATA[Object]]></Type>
+					</Parameter>
+					<Body><![CDATA[traceln("Action instruction received, step phase entered");
+//-----Observation-----
+ObservationEnc myObservation = physicalStep(action);
+
+//-----Done-----
+boolean done;
+if(abs(x) > xTreshold || abs(theta) > thetaThreshold){
+	 done = true;
+}else{
+	 done =  false;
+}
+
+//-----Reward-----
+double reward = 1.;
+
+//-----info-----
+//-----It is not necessary for the current project
+
+JSONObject info = new JSONObject("{}");
+//
+traceln("The reward is " + reward);
+traceln("The step function creates a step reply to summarise the effects of the action.");
+traceln("");
+Iteration += 1;
+traceln("Beginning interation number " + Iteration);
+StepReply myStepReply = new StepReply(myObservation, reward, done, info);
+return myStepReply;]]></Body>
+				</Function>
+				<Function AccessType="public" StaticFunction="false">
+					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+					<ReturnType><![CDATA[boolean]]></ReturnType>
+					<Id>1532521791118</Id>
+					<Name><![CDATA[isDone]]></Name>
+					<Description><![CDATA[This function is called periodically in order to check whether the environment needs to be reset.]]></Description>
+					<X>-720</X><Y>270</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[boolean done;
+if(abs(x) > xTreshold|| abs(theta) > thetaThreshold){
+	done = true;
+}else{
+	done = false;
+}
+traceln("Checking whether the pole angle or the position of the cart are beyond threshold: " + done);
+return done;]]></Body>
+				</Function>
+				<Function AccessType="public" StaticFunction="false">
+					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+					<ReturnType><![CDATA[O]]></ReturnType>
+					<Id>1532521813279</Id>
+					<Name><![CDATA[reset]]></Name>
+					<Description><![CDATA[This function is called when the environment needs to be reset (for instance because the pole fell or the current episode has arrived at step 200). In this case, all the intermediate variables are set back to 0 and the state variables are initialised randomly using the same distribution and support as in the DL4J examples. The value of the state variables is then formatted using our ObservationEnc class.]]></Description>
+					<X>-720</X><Y>300</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[traceln("");
+traceln("Resetting the Cartpole environment for a new round");
+temp = 0;
+thetaAcc = 0;
+xAcc = 0;
+cosTheta = 0;
+sinTheta = 0;
+theta = uniform(-0.05, 0.05);
+x = uniform(-0.05, 0.05);
+xDot = uniform(-0.05, 0.05);
+thetaDot = uniform(-0.05, 0.05);
+traceln("The initial value of x (position of the cart) is " + x);
+traceln("The initial value of theta (angle of the pole) is " + theta);
+traceln("The initial value of xDot (velocity of the cart) is " + xDot);
+traceln("The initial value of thetaDot (velocity of the pole) is " + thetaDot);
+Epoch += 1;
+traceln("Entering epoch " +Epoch);
+ObservationEnc oe = new ObservationEnc(x, theta, xDot, thetaDot);
+return (O) oe;]]></Body>
+				</Function>
+				<Function AccessType="public" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1532521823962</Id>
+					<Name><![CDATA[close]]></Name>
+					<Description><![CDATA[As mentioned, DL4J expects the class Mdp to possess a method called "close". In the original version, this function closes the connection to the local server which is used to interact with the Python OpenAI environment. Since we do not need this functionality here we may instead use the function to finish the Anylogic simulation if we want the simulation to stop when the training is finished.]]></Description>
+					<X>-720</X><Y>330</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[traceln("Training is complete");
+main.remove_mdps( this );
+//finishSimulation();
+return;
+]]></Body>
+				</Function>
+				<Function AccessType="public" StaticFunction="false">
+					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+					<ReturnType><![CDATA[Mdp]]></ReturnType>
+					<Id>1532533187210</Id>
+					<Name><![CDATA[newInstance]]></Name>
+					<Description><![CDATA[As with close(), DL4J expects the MDP class to possess this method and will complain if it does not exist but it is not called in the current example. By our understanding, it is used in other examples (e.g. Asynchronous learning) to create new instances of the MDP class during training.]]></Description>
+					<X>-720</X><Y>360</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[traceln("newInstance function is called");
+main.add_mdps();
+return (Mdp) main.mdps.get(main.mdps.size());]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+					<ReturnType><![CDATA[ObservationEnc]]></ReturnType>
+					<Id>1532592719122</Id>
+					<Name><![CDATA[physicalStep]]></Name>
+					<Description><![CDATA[Based on the action input received from the training algorithm, this function performs the actual "physical" step in the environment we create. It calculates the force based on the action instruction received and then calculates the new value of the state variables. It also adjusts the presentation of the cartpole based on the value of the state variables although this is not rendered since simulation time stops as soon as the train() function is called inside CartPoleBegin. Finally, it uses the class "ObservationEnc" which we created in order to bring the new state variables into a format which can be understood by the learning algorithm.]]></Description>
+					<X>-700</X><Y>240</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[action]]></Name>
+						<Type><![CDATA[Object]]></Type>
+					</Parameter>
+					<Body><![CDATA[traceln("The chosen action is " + action);
+traceln("The physical step function updates the state of the Cartpole and encodes the observation");
+int action1 = (Integer) action;
+if (action1 == 1){
+	force = Force_Mag;
+}else if(action1 == 0){
+	force = -1 * Force_Mag;
+}else{
+	traceln("!!!The action value in the physicalStep function is not handeled correctely!!!");
+}
+traceln("Based on the chosen action, we apply a force equal to " + force);
+cosTheta = cos(theta);
+sinTheta = sin(theta);
+temp = (force + cart.pole.Pole_Mass_Length * thetaDot * thetaDot * sinTheta) / cart.Total_Mass;
+thetaAcc = (Gravity * sinTheta - cosTheta * temp) / (cart.pole.Pole_Length * (4.0 / 3.0 - cart.pole.Mass_Pole * cosTheta * cosTheta / cart.Total_Mass));
+xAcc = temp - cart.pole.Pole_Mass_Length * thetaAcc * cosTheta / cart.Total_Mass;
+x += Tau * xDot;
+xDot += Tau * xAcc;
+theta += Tau * thetaDot;
+thetaDot += Tau * thetaAcc;
+cart.pole.presentation.setRotation(theta);
+cart.presentation.setX(Displacement_Coef * x);
+traceln("The new value of x (position of the cart) is " + x);
+traceln("The new value of theta (angle of the pole) is " + theta);
+traceln("The new value of xDot (velocity of the cart) is " + xDot);
+traceln("The new value of thetaDot (velocity of the pole) is " + thetaDot);
+ObservationEnc output = new ObservationEnc(x, xDot, theta, thetaDot);
+return output;]]></Body>
+				</Function>
+			</Functions>
+			<AgentLinks>
+				<AgentLink>
+					<Id>1532521526627</Id>
+					<Name><![CDATA[connections]]></Name>
+					<X>50</X><Y>-50</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<HandleReceiveInConnections>false</HandleReceiveInConnections>
+					<AgentLinkType>COLLECTION_OF_LINKS</AgentLinkType>
+					<AgentLinkBidirectional>true</AgentLinkBidirectional>
+					<MessageType><![CDATA[Object]]></MessageType>
+					<LineStyle>SOLID</LineStyle>
+					<LineWidth>1</LineWidth>
+					<LineColor>-16777216</LineColor>
+					<LineZOrder>UNDER_AGENTS</LineZOrder>
+					<LineArrow>NONE</LineArrow>
+					<LineArrowPosition>END</LineArrowPosition>
+				</AgentLink>
+			</AgentLinks>
+
+			<ContainerLinks>
+				<ContainerLink>
+					<Id>1532521526658</Id>
+					<Name><![CDATA[main]]></Name>
+					<X>50</X><Y>-100</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<ActiveObjectClass>
+						<PackageName><![CDATA[cartpole]]></PackageName>
+						<ClassName><![CDATA[Main]]></ClassName>
+					</ActiveObjectClass>
+				</ContainerLink>
+			</ContainerLinks>
+			<EmbeddedObjects>
+				<EmbeddedObject>
+					<Id>1532598846662</Id>
+					<Name><![CDATA[cart]]></Name>
+					<X>-100</X><Y>100</Y>
+					<Label><X>-15</X><Y>-30</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<PresentationId>1532598849002</PresentationId>
+					<ActiveObjectClass>
+						<PackageName><![CDATA[cartpole]]></PackageName>
+						<ClassName><![CDATA[Cart]]></ClassName>
+					</ActiveObjectClass>
+					<GenericParameterSubstitute>
+						<GenericParameterSubstituteReference>
+							<PackageName><![CDATA[cartpole]]></PackageName>
+							<ClassName><![CDATA[Cart]]></ClassName>
+							<ItemName><![CDATA[1532440317941]]></ItemName>
+						</GenericParameterSubstituteReference>
+					</GenericParameterSubstitute>
+					<Parameters>
+						<Parameter>
+							<Name><![CDATA[Mass_Cart]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[Total_Mass]]></Name>
+						</Parameter>
+					</Parameters>
+					<ReplicationFlag>false</ReplicationFlag>
+					<Replication Class="CodeValue">
+						<Code><![CDATA[100]]></Code>
+					</Replication>
+					<CollectionType>ARRAY_LIST_BASED</CollectionType>
+					<InEnvironment>true</InEnvironment>	
+					<InitialSpeedCode Class="CodeUnitValue">
+						<Code><![CDATA[10]]></Code>
+						<Unit Class="SpeedUnits"><![CDATA[MPS]]></Unit>
+					</InitialSpeedCode>
+					<InitialLocationType>AT_ANIMATION_POSITION</InitialLocationType>
+					<XCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</XCode>
+					<YCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</YCode>
+					<ZCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</ZCode>
+					<ColumnCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</ColumnCode>
+					<RowCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</RowCode>
+					<LatitudeCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</LatitudeCode>
+					<LongitudeCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</LongitudeCode>
+					<LocationNameCode Class="CodeValue">
+						<Code><![CDATA[""]]></Code>
+					</LocationNameCode>
+					<InitializationType>SPECIFIED_NUMBER</InitializationType>
+					<InitializationDatabaseTableQuery>
+						<TableReference>
+						</TableReference>
+					</InitializationDatabaseTableQuery>
+					<InitializationDatabaseType>ONE_AGENT_PER_DATABASE_RECORD</InitializationDatabaseType>
+					<QuantityColumn>
+					</QuantityColumn>
+				</EmbeddedObject>
+			</EmbeddedObjects>
+
+			<Shapes>
+				<EmbeddedObjectPresentation>
+					<Id>1532598849002</Id>
+					<Name><![CDATA[cart_presentation]]></Name>
+					<X>340</X><Y>-30</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<DrawingMode>AGENT_CURRENT_POSITION</DrawingMode>
+					<ScaleType>AUTOMATICALLY_CALCULATED</ScaleType>
+					<GISScaleForRealEmbeddedObjectPresentationSize>1000</GISScaleForRealEmbeddedObjectPresentationSize>
+					<GISScaleForFixedEmbeddedObjectPresentationSize>1000000000</GISScaleForFixedEmbeddedObjectPresentationSize>
+					<Latitude>0.0</Latitude>
+					<Longitude>0.0</Longitude>
+				</EmbeddedObjectPresentation>
+				<Text>
+					<Id>1532943584308</Id>
+					<Name><![CDATA[text]]></Name>
+					<X>-360</X><Y>80</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[State variables]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>20</Size>
+						<Style>1</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
+				<Text>
+					<Id>1532943667947</Id>
+					<Name><![CDATA[text1]]></Name>
+					<X>-440</X><Y>300</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[Intermediate function outputs of physicalStep]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>16</Size>
+						<Style>1</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
+				<Text>
+					<Id>1532962936377</Id>
+					<Name><![CDATA[text2]]></Name>
+					<X>-440</X><Y>500</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[Counters used to monitor the training]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>16</Size>
+						<Style>1</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
+			</Shapes>
+
+		</ActiveObjectClass>
+	</ActiveObjectClasses>	
+	<DifferentialEquationsMethod>EULER</DifferentialEquationsMethod>
+	<MixedEquationsMethod>RK45_NEWTON</MixedEquationsMethod>
+	<AlgebraicEquationsMethod>MODIFIED_NEWTON</AlgebraicEquationsMethod>
+	<AbsoluteAccuracy>1.0E-5</AbsoluteAccuracy>
+	<FixedTimeStep>0.001</FixedTimeStep>
+	<RelativeAccuracy>1.0E-5</RelativeAccuracy>
+	<TimeAccuracy>1.0E-5</TimeAccuracy>
+	<Frame>
+		<Width>1000</Width>
+		<Height>600</Height>
+	</Frame>
+	<Database>
+		<Logging>false</Logging>
+		<AutoExport>false</AutoExport>
+		<ImportSettings>
+		</ImportSettings>
+		<ExportSettings>
+			<ExportExcelFilePath><![CDATA[]]></ExportExcelFilePath>
+		</ExportSettings>
+	</Database>
+	
+	<RunConfiguration ActiveObjectClassId="1532438531947">
+		<Id>1532438531952</Id>
+		<Name><![CDATA[RunConfiguration]]></Name>
+		<ModelTimeProperties>
+			<StopOption><![CDATA[Stop at specified time]]></StopOption>
+			<InitialDate><![CDATA[1532390400000]]></InitialDate>	
+			<InitialTime><![CDATA[0.0]]></InitialTime>	
+			<FinalDate><![CDATA[1535068800000]]></FinalDate>	
+			<FinalTime><![CDATA[100.0]]></FinalTime>	
+		</ModelTimeProperties>
+		<AnimationProperties>
+			<StopNever>true</StopNever>
+			<ExecutionMode>realTimeScaled</ExecutionMode>
+			<RealTimeScale>1.0</RealTimeScale>
+			<EnableZoomAndPanning>true</EnableZoomAndPanning>
+			<EnableDeveloperPanel>false</EnableDeveloperPanel>
+			<ShowDeveloperPanelOnStart>false</ShowDeveloperPanelOnStart>
+		</AnimationProperties>
+		<Inputs>		
+		</Inputs>
+		<Outputs>
+		</Outputs>
+	</RunConfiguration>
+	<Experiments>	
+		<!--   =========   Simulation Experiment   ========  -->
+		<SimulationExperiment ActiveObjectClassId="1532438531947">
+			<Id>1532438531949</Id>
+			<Name><![CDATA[Simulation]]></Name>
+			<ClientAreaTopLeft><X>0</X><Y>0</Y></ClientAreaTopLeft>
+			<CommandLineArguments><![CDATA[]]></CommandLineArguments>
+			<MaximumMemory>512</MaximumMemory>
+			<RandomNumberGenerationType>fixedSeed</RandomNumberGenerationType>
+			<CustomGeneratorCode>new Random()</CustomGeneratorCode>
+			<SeedValue>123</SeedValue>
+			<SelectionModeForSimultaneousEvents>FIFO</SelectionModeForSimultaneousEvents>
+			<VmArgs><![CDATA[]]></VmArgs>
+			<LoadRootFromSnapshot>false</LoadRootFromSnapshot>
+			<SnapshotFile></SnapshotFile>
+
+			<Shapes>
+				<Text>
+					<Id>1532438531950</Id>
+					<Name><![CDATA[text]]></Name>
+					<X>40</X><Y>30</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-12490271</Color>
+					<Text><![CDATA[CartPole]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>24</Size>
+						<Style>0</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
+			</Shapes>
+			<Controls>
+				<Control Type="Button">
+				 	<EmbeddedIcon>false</EmbeddedIcon>				
+					<Id>1532438531951</Id>
+					<Name><![CDATA[button]]></Name>
+					<X>40</X><Y>80</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<BasicProperties Width="100" Height="30">
+                        <EmbeddedIcon>false</EmbeddedIcon>	
+						<TextColor/>
+						<Enabled>true</Enabled>
+						<ActionCode><![CDATA[if ( getState() == IDLE )
+	run();
+getExperimentHost().setPresentable( getEngine().getRoot() );]]></ActionCode>
+					</BasicProperties>
+					<ExtendedProperties>
+						<Font Name="Dialog" Size="11" Style="0"/>
+						<LabelText><![CDATA[Run]]></LabelText>
+						<LabelCode><![CDATA[getState() == IDLE ?
+	"Run" :
+	"Top level agent"]]></LabelCode>
+					</ExtendedProperties>
+				</Control>
+			</Controls>
+
+			<Parameters>			
+			</Parameters>			
+			<PresentationProperties>
+				<EnableZoomAndPanning>true</EnableZoomAndPanning>
+				<ExecutionMode><![CDATA[realTimeScaled]]></ExecutionMode>
+				<Title><![CDATA[CartPole : Simulation]]></Title>	
+				<EnableDeveloperPanel>true</EnableDeveloperPanel>
+				<ShowDeveloperPanelOnStart>false</ShowDeveloperPanelOnStart>
+				<RealTimeScale>1.0</RealTimeScale>
+			</PresentationProperties>
+			<ModelTimeProperties>
+				<StopOption><![CDATA[Never]]></StopOption>
+				<InitialDate><![CDATA[1532390400000]]></InitialDate>	
+				<InitialTime><![CDATA[0.0]]></InitialTime>	
+				<FinalDate><![CDATA[1535068800000]]></FinalDate>	
+				<FinalTime><![CDATA[100.0]]></FinalTime>	
+			</ModelTimeProperties>
+		</SimulationExperiment>	
+	</Experiments>
+	<JavaClasses>
+		<!--   =========   Java Class   ========  -->
+		<JavaClass>
+			<Id>1532531395442</Id>
+			<Name><![CDATA[CartPoleObservationSpace]]></Name>
+			<Text><![CDATA[/*
+This class was created to allow the Environment/MDP we create in AnyLogic to interact
+with the functions of the DL4J repository. These functios expect various inputs to be in a certain
+format and this is one of the classes we use precisely for this. Here we are taking the observation space
+as defined by the cartpole environment we are creating (the mdp agent) and we represent its characteristics
+in a format which DL4J will understand.
+*/
+
+import org.nd4j.linalg.api.ndarray.INDArray;
+import org.nd4j.linalg.factory.Nd4j;
+import org.deeplearning4j.rl4j.space.ObservationSpace;
+
+
+public class CartPoleObservationSpace implements Serializable, ObservationSpace {
+	
+	//This is the name of our environment
+	String name;
+    //The shape of observations (sets of realisations of the state variables) from the environment
+	int[] shape;
+	//An array giving the lower bounds of the observation space
+    INDArray low;
+    //An array giving the upper bounds of the observation space
+    INDArray high;
+
+    public CartPoleObservationSpace(double xThreshold, double thetaThreshold) {
+    	//Name is set to "Box", same as in the DL4J example
+    	this.name = "Box";
+    	
+    	/*
+    	shape (for some reason) is expected by DL4J to be formatted as an array of integers with only one element
+    	In our case, shape is 4 since each observation from the cartpole environment consists of four numbers:
+    	The position of the cart (x), its velocity (xDot), the angle of the pole (theta) and the velocity of the pole (thetaDot)
+    	*/
+    	int[] shape = {4};  
+    	this.shape = shape;
+    	
+    	/*
+    	the lines below create the upper and lower bounds of the observation space, resulting in two arrays of length
+    	4 (the same as the number of dimensions of each observation as explained above). The upper and lower bounds for x
+    	(the position of the cart) and theta (the angle of the pole) are set two +/- two times the tresholds defined inside
+    	the Mdp class (this is to ensure that the thresholds themselves are well inside the observation space) while the 
+    	velocities xDot and thetaDot are assumed to be unbounded in principle (their bounds are set to +/- infinity)
+    	*/
+    	this.low = Nd4j.create(shape);
+    	this.high = Nd4j.create(shape);
+    	this.low.putScalar(0, -2*xThreshold);
+    	this.low.putScalar(1, Double.NEGATIVE_INFINITY);
+    	this.low.putScalar(2, -2*thetaThreshold);
+    	this.low.putScalar(3, Double.NEGATIVE_INFINITY);
+    	this.high.putScalar(0, 2*xThreshold);
+    	this.high.putScalar(1, Double.POSITIVE_INFINITY);
+    	this.high.putScalar(2, 2*thetaThreshold);
+    	this.high.putScalar(3, Double.POSITIVE_INFINITY);
+    }
+    
+    public String getName() {
+    	return name;
+    };
+
+    public int[] getShape() {
+    	return shape;
+    };
+
+    public INDArray getLow() {
+    	return low;
+    };
+
+    public INDArray getHigh() {
+    	return high;
+    };
+
+    
+
+	/**
+	 * This number is here for model snapshot storing purpose<br>
+	 * It needs to be changed when this class gets changed
+	 */ 
+	private static final long serialVersionUID = 1L;
+
+}]]></Text>
+		</JavaClass>
+		<!--   =========   Java Class   ========  -->
+		<JavaClass>
+			<Id>1532600224750</Id>
+			<Name><![CDATA[CartPoleBegin]]></Name>
+			<Text><![CDATA[/*
+This class which we created in essence reproduces the file Cartpole.java found in the DL4J repository.
+The only change we make is in lines 74-83 where we define the training environment (MDP) using the agent we 
+created in AnyLogic instead of loading in the environment from OpenAI which is used in the DL4J examples.
+We have also not yet implemented the last part of the Cartpole.java file which will construct and load a 
+trained version of the cartpole which has already learned to perform the task-
+*/
+
+import java.io.IOException;
+//Needed to define the training
+import org.deeplearning4j.rl4j.space.Box;
+//Needed to define and perform the training
+import org.deeplearning4j.rl4j.learning.sync.qlearning.QLearning;
+import org.deeplearning4j.rl4j.learning.sync.qlearning.discrete.QLearningDiscreteDense;
+//needed to construct the MDP (environment)
+import org.deeplearning4j.rl4j.mdp.gym.GymEnv;
+//used for creating the network(s)
+import org.deeplearning4j.rl4j.network.dqn.DQNFactoryStdDense;
+//used for creating the final learned policy
+import org.deeplearning4j.rl4j.policy.DQNPolicy;
+//needed to define the environement
+import org.deeplearning4j.rl4j.space.DiscreteSpace;
+//Used to create a data manager which saves the training data
+import org.deeplearning4j.rl4j.util.DataManager;
+//Needed to construct the network(s)
+import org.nd4j.linalg.learning.config.Adam;
+
+import java.util.logging.Logger;
+
+public class CartPoleBegin implements Serializable {
+
+    /**
+     * Default constructor
+     */
+	//Here we are setting the necessary parameters for the Q-learning algorithm. Since as a first step we are trying to exactly reproduce the Cartpole example 
+	//provided by OpenAI, we are using the exact same parameters as those given in the example available in the DL4J package
+    public static QLearning.QLConfiguration CARTPOLE_QL =
+            new QLearning.QLConfiguration(
+                    123,    //Random seed -> self-explanatory. There are 2 sources of randomness in the present application, one being the e-greedy policy and the other the random initialisation of the state variables whenever reset is called
+                    200,    //Max step By epoch -> this gives the maximum number of steps in an "epoch", i.e. in one round of the "game". In the case of cartpole, an epoch ends when the pole "falls over" (exceeds the threshold for theta), when the cart moves outside of the threshold for x, or when the algorithm has kept the pole upright for 200 steps
+                    10, 		//Max step --> this is the overall maximum number of steps that can be taken in one round of training consisting of multiple "epochs"
+                    10, 		//Max size of experience replay --> this is the maximum size of the "experience", i.e. the memory of past results which is stored and used in random batches to update the current network
+                    32,     //size of batches --> this is the size of the batches of experiences (i.e. combinations of prior state, action, posterior state and reward) which are used at each step for updating the current neural network
+                    500,    //target update (hard) --> This is the frequency with which the target network (the one which will hopefully learn the optimal policy) is updated. We are performing a hard update meaning that every 500 steps, the current network is copied to become the new target network
+                    10,     //num step noop warmup --> This is the number of steps at the beginning for which we simply take random actions in order to build up a buffer of experiences
+                    0.01,   //reward scaling --> rewards are scaled by this factor before being fed into the network.
+                    0.99,   //gamma --> this is the discount factor which is applied to expected future rewards in calculating the q-value of a given state
+                    1.0,    //td-error clipping --> Error clipping is used to prevent outliers from having too much weight in updating the network. "Extreme" observations are rescaled using this parameter. 
+                    0.1f,   //min epsilon --> This is the value to which the parameter epsilon will eventually converge over time. It starts off at a higher value to ensure more exploration in initial stages
+                    1000,   //num step for eps greedy anneal --> this sets the speed at which epsilon declines from its initial value to its minimum set above.
+                    true    //double DQN --> We choose whether or not we wish to use the Double DQN algorithm (as opposed to "simple" DQN).
+            );
+    
+    /*
+    Here we are defining the parameters for our network(s) (In the algorithm that is used here, there are two neural nets, a current and a target network. Both are used to define the actions which the Cartpole performs
+    but the target network is updated only infrequently (see above) to improve stability). Again since we are aiming to reproduce exactly the DL4J example, we make no changes.
+    Here our networks have 3 layers, 16 nodes, we set the optimisation algorithm (adam) and the learning rate (0.0005). Finally we choose L2-regularisation with a paramter equal to 0.001 to prevent overfitting.
+    */
+    public static DQNFactoryStdDense.Configuration CARTPOLE_NET =
+        DQNFactoryStdDense.Configuration.builder()
+            .l2(0.001).updater(new Adam(0.0005)).numHiddenNodes(16).numLayer(3).build();
+
+    public static void CartPoleBegin(Main main) throws IOException {
+
+        //Here we are creating the data manager intended to save the training data
+        DataManager manager = new DataManager(true);
+        
+        /*
+        Here we are creating the "MDP" (Markov-decision-process), in essence the environment with which the learning algorithm will interact.
+        The MDP will receive orders from the network to perform an action (in our simple example there are only 2 actions) and return the resulting 
+        observations (did the pole fall over? What is the reward? What is the new value of the state variables?) back to the network which are then used for
+        updating the network and for choosing the next action. In our case the MDP is an instance of the Mdp (cartpole) agent 
+        class we created in AnyLogic, which in turn reproduces the CartPole environment used in the DL4J examples
+        */
+        Mdp myCartPole = null;
+        try {
+        	traceln("We create the MDP Cartpole agent and add it to the environment");
+        	myCartPole = main.createMDP();
+        	traceln("Agent created successfully");
+        	traceln("");
+        } catch (RuntimeException e){
+            traceln("Error at creating the first Agent");
+        }
+        
+        /*
+        Here we are defining the training programme using as inputs our MDP, the parameters for the neural net(s),
+        the parameters for the learning algorithm, and the data manager, all of which we created above. We have thus
+        defined both the task to be learned (balancing the pole) and the methods to be used in the learning (double DQN
+        using the parameters set above and neural nets with the configuration defined above).
+        */
+        traceln("We define the training routine");
+        QLearningDiscreteDense<Box> dql = new QLearningDiscreteDense(myCartPole, CARTPOLE_NET, CARTPOLE_QL, manager);
+        traceln("Training defined successfully");
+        traceln("");
+        
+        /*
+        This is where all of the action happens. The train() function is in essence a set of nested loops
+        performing the Q-learning algorithm using the parameters we defined above. It observes the current state
+        of the MDP (i.e. where on the x-axis is the cart? what is its velocity? What is the angle of the pole?) and
+        uses the current neural net to determine an action given this observation. It then observes the outcome of this action
+        and uses this as an input for learning better policies.
+        This is where we are having difficulty right now. As soon as the training function is called, the simulation time
+        in AnyLogic stops until the training is finished (i.e. until all loops inside the function are completed). The individual
+        training steps are not rendered (i.e. the cartpole animation does not move) and the AnyLogic model time is not incremented. 
+        The train function interacts with the variables we created in AnyLogic but the AnyLogic simulation itself is not in fact 
+        running during the training. The latest thing we have been trying is to solve this using an AnyLogic custom experiment but we have not yet been successful.
+        */
+        traceln("Traning is starting");
+        traceln("Beginning interation number 1");
+        dql.train();
+        traceln("Training finished");
+
+
+        //Here we extract the final policy (i.e. the thing which defines what action to take in a given situation) which has
+        //resulted from the training performed above. Ideally it has learned how to keep the pole upright in all situations.
+        DQNPolicy<Box> pol = dql.getPolicy();
+
+        //Here we save the created policy
+        pol.save("/tmp/pol1");
+
+        //This function seems to be required but performs no action in our case since we are not using a server to interface with the MDP.
+        //Our version of the close() function does not at present do anything but perhaps we can modify it to make it stop the AnyLogic simulation.
+        myCartPole.close();
+
+
+    }
+		
+	
+	
+	@Override
+	public String toString() {
+		return super.toString();
+	}
+
+	/**
+	 * This number is here for model snapshot storing purpose<br>
+	 * It needs to be changed when this class gets changed
+	 */ 
+	private static final long serialVersionUID = 1L;
+
+}]]></Text>
+		</JavaClass>
+		<!--   =========   Java Class   ========  -->
+		<JavaClass>
+			<Id>1532616681314</Id>
+			<Name><![CDATA[ObservationEnc]]></Name>
+			<Text><![CDATA[/*
+Similarly to the class CartPoleObservationSpace, which is used to present the observation 
+space of the environment we create in a format which DL4J understands, here we are creating
+a class which can convert single observations from our environment (i.e. one realisation of 
+position, angle and the velocities) to a format which can be fed to the learning algorithm.
+*/
+import org.deeplearning4j.rl4j.space.Encodable;
+
+public class ObservationEnc implements Serializable, Encodable {
+
+    /**
+     * Default constructor
+     */
+	
+	
+	private double x;
+	private double xDot;
+	private double theta;
+	private double thetaDot;
+	
+    public ObservationEnc(double x, double xDot, double theta, double thetaDot) {
+    	this.x = x;
+    	this.xDot = xDot;
+    	this.theta = theta;
+    	this.thetaDot = thetaDot;
+    }
+    
+    public double[] toArray() {
+    	double[] tA = new double[]{this.x, this.xDot, this.theta, this.thetaDot};
+    	return tA;
+    }
+    
+	@Override
+	public String toString() {
+		return super.toString();
+	}
+
+	/**
+	 * This number is here for model snapshot storing purpose<br>
+	 * It needs to be changed when this class gets changed
+	 */ 
+	private static final long serialVersionUID = 1L;
+
+}]]></Text>
+		</JavaClass>
+		<!--   =========   Java Class   ========  -->
+		<JavaClass>
+			<Id>1533030415476</Id>
+			<Name><![CDATA[TrainedCartPole]]></Name>
+			<Text><![CDATA[/*
+ This class is used to create a "trained Cartpole", i.e. an instance of the MDP together with the policy which
+ was learned during the training phase. This can be used to demonstrate whether or not the neural net successfully
+ learned to solve the task.
+ */
+import java.io.IOException;
+import org.deeplearning4j.rl4j.space.Box;
+import org.deeplearning4j.rl4j.learning.sync.qlearning.QLearning;
+import org.deeplearning4j.rl4j.learning.sync.qlearning.discrete.QLearningDiscreteDense;
+import org.deeplearning4j.rl4j.mdp.gym.GymEnv;
+import org.deeplearning4j.rl4j.network.dqn.DQNFactoryStdDense;
+import org.deeplearning4j.rl4j.policy.DQNPolicy;
+import org.deeplearning4j.rl4j.space.DiscreteSpace;
+import org.deeplearning4j.rl4j.util.DataManager;
+import org.nd4j.linalg.learning.config.Adam;
+
+public class TrainedCartPole implements Serializable {
+
+    public static void loadCartpole(Main main) throws IOException {
+
+        //Create the new CartPole
+    	Mdp TrainedCart = null;
+        try {
+        	traceln("We create a new Cartpole agent and add it to the environment");
+        	TrainedCart = main.createMDP();
+        	traceln("Agent created successfully");
+        	traceln("");
+        } catch (RuntimeException e){
+            traceln("Error at creating the trained Agent");
+        }
+        
+        //load the policy which was learned and saved during the training phase
+        traceln("We load the trained policy");
+        DQNPolicy<Box> pol2 = DQNPolicy.load("/tmp/pol1");
+        //run the agent for i epochs (rounds) and observe the rewards
+        traceln("Starting simulation of the trained agent");
+        double rewards = 0;
+        for (int i = 0; i < 1000; i++) {
+        	TrainedCart.reset();
+            double reward = pol2.play(TrainedCart);
+            rewards += reward;
+            traceln("The cumulative reward is " + rewards);
+        }
+
+        traceln("The average reward for a trained epoch is " + rewards/1000);
+
+    }
+
+	/**
+	 * This number is here for model snapshot storing purpose<br>
+	 * It needs to be changed when this class gets changed
+	 */ 
+	private static final long serialVersionUID = 1L;
+
+}]]></Text>
+		</JavaClass>
+	</JavaClasses>
+    <RequiredLibraryReference>
+		<LibraryName><![CDATA[com.anylogic.libraries.processmodeling]]></LibraryName>
+		<VersionMajor>8</VersionMajor>
+		<VersionMinor>0</VersionMinor>
+		<VersionBuild>5</VersionBuild>
+    </RequiredLibraryReference>
+	<ClassPathEntry>
+		<Location><![CDATA[rl4j-examples-1.0.0-beta.jar]]></Location>
+		<Imported>true</Imported>
+		<Folder>false</Folder>
+	</ClassPathEntry>
+</Model>
+</AnyLogicWorkspace>
