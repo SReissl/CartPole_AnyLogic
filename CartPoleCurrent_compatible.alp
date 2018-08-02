@@ -4,10 +4,10 @@
 	         AnyLogic Project File 
 *************************************************	         
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.3.2.201807061735" AlpVersion="8.3.1">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.2.3.201712291251" AlpVersion="8.0.4">
 <Model>
 	<Id>1532438531942</Id>
-	<Name><![CDATA[CartPoleCurrent]]></Name>
+	<Name><![CDATA[CartPoleCurrent_compatible]]></Name>
 	<EngineVersion>6</EngineVersion>
 	<JavaPackageName><![CDATA[cartpole]]></JavaPackageName>
 	<ModelTimeUnit><![CDATA[Second]]></ModelTimeUnit>
@@ -17,6 +17,8 @@
 			<Id>1532438531947</Id>
 			<Name><![CDATA[Main]]></Name>
 			<ClientAreaTopLeft><X>0</X><Y>0</Y></ClientAreaTopLeft>
+			<PresentationTopGroupPersistent>true</PresentationTopGroupPersistent>
+			<IconTopGroupPersistent>true</IconTopGroupPersistent>
 			<Import><![CDATA[import org.deeplearning4j.rl4j.space.ActionSpace;
 import java.io.File;
 import java.io.IOException;
@@ -31,9 +33,6 @@ import org.deeplearning4j.rl4j.util.DataManager;
 import org.nd4j.linalg.learning.config.Adam;
 
 import java.util.logging.Logger;]]></Import>
-			<StartupCode><![CDATA[
-
-//loadCartpole(); TODO]]></StartupCode>
 			<Generic>true</Generic>
 			<GenericParameter>
 				<Id>1532438531946</Id>
@@ -75,18 +74,6 @@ import java.util.logging.Logger;]]></Import>
 					<Code><![CDATA[10]]></Code>
 					<Unit Class="SpeedUnits"><![CDATA[MPS]]></Unit>
 				</VelocityCode>
-				<PhysicalLength Class="CodeUnitValue">
-					<Code><![CDATA[1]]></Code>
-					<Unit Class="LengthUnits"><![CDATA[METER]]></Unit>
-				</PhysicalLength>
-				<PhysicalWidth Class="CodeUnitValue">
-					<Code><![CDATA[1]]></Code>
-					<Unit Class="LengthUnits"><![CDATA[METER]]></Unit>
-				</PhysicalWidth>
-				<PhysicalHeight Class="CodeUnitValue">
-					<Code><![CDATA[1]]></Code>
-					<Unit Class="LengthUnits"><![CDATA[METER]]></Unit>
-				</PhysicalHeight>
 			</AgentProperties>
 			<EnvironmentProperties>
 					<EnableSteps>false</EnableSteps>
@@ -142,9 +129,9 @@ import java.util.logging.Logger;]]></Import>
 			<ConnectionsId>1532438531943</ConnectionsId>
 			<Variables>
 				<Variable Class="PlainVariable">
-					<Id>1533215129507</Id>
+					<Id>1533223989253</Id>
 					<Name><![CDATA[Train]]></Name>
-					<X>-160</X><Y>100</Y>
+					<X>-140</X><Y>90</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -163,8 +150,7 @@ import java.util.logging.Logger;]]></Import>
 					<ReturnType><![CDATA[Mdp]]></ReturnType>
 					<Id>1532613991935</Id>
 					<Name><![CDATA[createMDP]]></Name>
-					<Description><![CDATA[This function creates an instance of the Mdp class and adds it to the population mdps inside Main. It is called in the CartPoleBegin class.]]></Description>
-					<X>-160</X><Y>60</Y>
+					<X>-140</X><Y>50</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -200,12 +186,12 @@ return myMdp;]]></Body>
 				<EmbeddedObject>
 					<Id>0</Id>
 					<Name><![CDATA[mdps]]></Name>
-					<X>-280</X><Y>60</Y>
-					<Label><X>15</X><Y>0</Y></Label>
+					<X>-250</X><Y>50</Y>
+					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<PresentationId>1532943337696</PresentationId>
+					<PresentationId>1533223974734</PresentationId>
 					<ActiveObjectClass>
 						<PackageName><![CDATA[cartpole]]></PackageName>
 						<ClassName><![CDATA[Mdp]]></ClassName>
@@ -236,7 +222,10 @@ return myMdp;]]></Body>
 							<Name><![CDATA[Gravity]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[Force_Mag]]></Name>
+							<Name><![CDATA[MaxStep]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[xThreshold]]></Name>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[Tau]]></Name>
@@ -245,16 +234,13 @@ return myMdp;]]></Body>
 							<Name><![CDATA[Displacement_Coef]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[xTreshold]]></Name>
+							<Name><![CDATA[Force_Mag]]></Name>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[thetaThreshold]]></Name>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[Action_Space_Size]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[MaxStep]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
@@ -305,7 +291,7 @@ return myMdp;]]></Body>
 
 			<Shapes>
 				<EmbeddedObjectPresentation>
-					<Id>1532943337696</Id>
+					<Id>1533223974734</Id>
 					<Name><![CDATA[mdps_presentation]]></Name>
 					<X>0</X><Y>0</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -313,6 +299,7 @@ return myMdp;]]></Body>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
 					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<AsObject>true</AsObject>
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Z>0</Z>
 					<Rotation>0.0</Rotation>
@@ -329,13 +316,15 @@ return myMdp;]]></Body>
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1532598481702</Id>
 					<Name><![CDATA[button]]></Name>
-					<X>100</X><Y>480</Y>
+					<X>100</X><Y>460</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
-					<BasicProperties Width="100" Height="30">
-                        <EmbeddedIcon>false</EmbeddedIcon>	
+					<BasicProperties Width="100" Height="30" 
+				AsObject="true">
+                        <EmbeddedIcon>false</EmbeddedIcon>				
+						<FillColor/>
 						<TextColor/>
 						<Enabled>true</Enabled>
 						<ActionCode><![CDATA[try{
@@ -351,15 +340,39 @@ return myMdp;]]></Body>
 				</Control>
 				<Control Type="Button">
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
-					<Id>1533030926058</Id>
+					<Id>1533223799207</Id>
 					<Name><![CDATA[button1]]></Name>
-					<X>400</X><Y>480</Y>
+					<X>750</X><Y>460</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
-					<BasicProperties Width="100" Height="30">
-                        <EmbeddedIcon>false</EmbeddedIcon>	
+					<BasicProperties Width="100" Height="30" 
+				AsObject="true">
+                        <EmbeddedIcon>false</EmbeddedIcon>				
+						<FillColor/>
+						<TextColor/>
+						<Enabled>true</Enabled>
+						<ActionCode><![CDATA[finishSimulation();]]></ActionCode>
+					</BasicProperties>
+					<ExtendedProperties>
+						<Font Name="Dialog" Size="11" Style="0"/>
+						<LabelText><![CDATA[Exit]]></LabelText>
+					</ExtendedProperties>
+				</Control>
+				<Control Type="Button">
+				 	<EmbeddedIcon>false</EmbeddedIcon>				
+					<Id>1533223799423</Id>
+					<Name><![CDATA[button2]]></Name>
+					<X>435</X><Y>460</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<BasicProperties Width="100" Height="30" 
+				AsObject="true">
+                        <EmbeddedIcon>false</EmbeddedIcon>				
+						<FillColor/>
 						<TextColor/>
 						<Enabled>true</Enabled>
 						<ActionCode><![CDATA[Train=false;
@@ -375,27 +388,6 @@ try{
 						<LabelText><![CDATA[Trained Cart]]></LabelText>
 					</ExtendedProperties>
 				</Control>
-				<Control Type="Button">
-				 	<EmbeddedIcon>false</EmbeddedIcon>				
-					<Id>1533031140935</Id>
-					<Name><![CDATA[button2]]></Name>
-					<Description><![CDATA[A button to finish the simultation if we wish.]]></Description>
-					<X>700</X><Y>480</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<BasicProperties Width="100" Height="30">
-                        <EmbeddedIcon>false</EmbeddedIcon>	
-						<TextColor/>
-						<Enabled>true</Enabled>
-						<ActionCode><![CDATA[finishSimulation();]]></ActionCode>
-					</BasicProperties>
-					<ExtendedProperties>
-						<Font Name="Dialog" Size="11" Style="0"/>
-						<LabelText><![CDATA[Exit]]></LabelText>
-					</ExtendedProperties>
-				</Control>
 			</Controls>
 
 		</ActiveObjectClass>
@@ -404,6 +396,8 @@ try{
 			<Id>1532440317942</Id>
 			<Name><![CDATA[Cart]]></Name>
 			<ClientAreaTopLeft><X>0</X><Y>0</Y></ClientAreaTopLeft>
+			<PresentationTopGroupPersistent>true</PresentationTopGroupPersistent>
+			<IconTopGroupPersistent>true</IconTopGroupPersistent>
 			<Generic>false</Generic>
 			<GenericParameter>
 				<Id>1532440317941</Id>
@@ -429,18 +423,6 @@ try{
 					<Code><![CDATA[10]]></Code>
 					<Unit Class="SpeedUnits"><![CDATA[MPS]]></Unit>
 				</VelocityCode>
-				<PhysicalLength Class="CodeUnitValue">
-					<Code><![CDATA[1]]></Code>
-					<Unit Class="LengthUnits"><![CDATA[METER]]></Unit>
-				</PhysicalLength>
-				<PhysicalWidth Class="CodeUnitValue">
-					<Code><![CDATA[1]]></Code>
-					<Unit Class="LengthUnits"><![CDATA[METER]]></Unit>
-				</PhysicalWidth>
-				<PhysicalHeight Class="CodeUnitValue">
-					<Code><![CDATA[1]]></Code>
-					<Unit Class="LengthUnits"><![CDATA[METER]]></Unit>
-				</PhysicalHeight>
 			</AgentProperties>
 			<EnvironmentProperties>
 					<EnableSteps>false</EnableSteps>
@@ -496,10 +478,9 @@ try{
 			<ConnectionsId>1532440317938</ConnectionsId>
 			<Variables>
 				<Variable Class="Parameter">
-					<Id>1532959674137</Id>
+					<Id>1533224130593</Id>
 					<Name><![CDATA[Mass_Cart]]></Name>
-					<Description><![CDATA[The mass of the cart]]></Description>
-					<X>250</X><Y>-110</Y>
+					<X>310</X><Y>-120</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -512,7 +493,7 @@ try{
 							<Code><![CDATA[1]]></Code>
 						</DefaultValue>
 						<ParameterEditor>
-							<Id>1532959674135</Id>
+							<Id>1533224130591</Id>
 							<EditorContolType>TEXT_BOX</EditorContolType>
 							<MinSliderValue><![CDATA[0]]></MinSliderValue>
 							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
@@ -521,10 +502,9 @@ try{
 					</Properties>                 
 				</Variable>
 				<Variable Class="Parameter">
-					<Id>1532963218593</Id>
+					<Id>1533224132377</Id>
 					<Name><![CDATA[Total_Mass]]></Name>
-					<Description><![CDATA[The mass of the cart plus that of the pole]]></Description>
-					<X>250</X><Y>-80</Y>
+					<X>310</X><Y>-90</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -537,7 +517,7 @@ try{
 							<Code><![CDATA[Mass_Cart+pole.Mass_Pole]]></Code>
 						</DefaultValue>
 						<ParameterEditor>
-							<Id>1532963218591</Id>
+							<Id>1533224132375</Id>
 							<EditorContolType>TEXT_BOX</EditorContolType>
 							<MinSliderValue><![CDATA[0]]></MinSliderValue>
 							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
@@ -600,7 +580,7 @@ try{
 				<EmbeddedObject>
 					<Id>1532441789141</Id>
 					<Name><![CDATA[pole]]></Name>
-					<X>-180</X><Y>50</Y>
+					<X>-100</X><Y>40</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -619,13 +599,13 @@ try{
 					</GenericParameterSubstitute>
 					<Parameters>
 						<Parameter>
-							<Name><![CDATA[Mass_Pole]]></Name>
-						</Parameter>
-						<Parameter>
 							<Name><![CDATA[Pole_Length]]></Name>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[Pole_Mass_Length]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[Mass_Pole]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>false</ReplicationFlag>
@@ -684,6 +664,7 @@ try{
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
 					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<AsObject>true</AsObject>
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Z>0</Z>
 					<Rotation>0.0</Rotation>
@@ -703,6 +684,7 @@ try{
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
 					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<AsObject>true</AsObject>
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Z>0</Z>
 					<Rotation>0.0</Rotation>
@@ -717,6 +699,7 @@ try{
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
 					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<AsObject>true</AsObject>
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Z>0</Z>
 					<ZHeight>10</ZHeight>
@@ -739,6 +722,7 @@ try{
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
 					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<AsObject>true</AsObject>
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Z>0</Z>
 					<ZHeight>10</ZHeight>
@@ -761,6 +745,7 @@ try{
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
 					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<AsObject>true</AsObject>
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Z>0</Z>
 					<ZHeight>10</ZHeight>
@@ -785,6 +770,8 @@ try{
 			<Id>1532440773838</Id>
 			<Name><![CDATA[Pole]]></Name>
 			<ClientAreaTopLeft><X>0</X><Y>0</Y></ClientAreaTopLeft>
+			<PresentationTopGroupPersistent>true</PresentationTopGroupPersistent>
+			<IconTopGroupPersistent>true</IconTopGroupPersistent>
 			<Generic>false</Generic>
 			<GenericParameter>
 				<Id>1532440773837</Id>
@@ -810,18 +797,6 @@ try{
 					<Code><![CDATA[10]]></Code>
 					<Unit Class="SpeedUnits"><![CDATA[MPS]]></Unit>
 				</VelocityCode>
-				<PhysicalLength Class="CodeUnitValue">
-					<Code><![CDATA[1]]></Code>
-					<Unit Class="LengthUnits"><![CDATA[METER]]></Unit>
-				</PhysicalLength>
-				<PhysicalWidth Class="CodeUnitValue">
-					<Code><![CDATA[1]]></Code>
-					<Unit Class="LengthUnits"><![CDATA[METER]]></Unit>
-				</PhysicalWidth>
-				<PhysicalHeight Class="CodeUnitValue">
-					<Code><![CDATA[1]]></Code>
-					<Unit Class="LengthUnits"><![CDATA[METER]]></Unit>
-				</PhysicalHeight>
 			</AgentProperties>
 			<EnvironmentProperties>
 					<EnableSteps>false</EnableSteps>
@@ -877,35 +852,9 @@ try{
 			<ConnectionsId>1532440773834</ConnectionsId>
 			<Variables>
 				<Variable Class="Parameter">
-					<Id>1532963264777</Id>
-					<Name><![CDATA[Mass_Pole]]></Name>
-					<Description><![CDATA[Mass of the pole]]></Description>
-					<X>370</X><Y>-100</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[double]]></Type>
-						<UnitType><![CDATA[NONE]]></UnitType>
-						<SdArray>false</SdArray>
-						<DefaultValue Class="CodeValue">
-							<Code><![CDATA[0.1]]></Code>
-						</DefaultValue>
-						<ParameterEditor>
-							<Id>1532963264775</Id>
-							<EditorContolType>TEXT_BOX</EditorContolType>
-							<MinSliderValue><![CDATA[0]]></MinSliderValue>
-							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
-							<DelimeterType>NO_DELIMETER</DelimeterType>
-						</ParameterEditor>
-					</Properties>                 
-				</Variable>
-				<Variable Class="Parameter">
-					<Id>1532963268728</Id>
+					<Id>1533224271999</Id>
 					<Name><![CDATA[Pole_Length]]></Name>
-					<Description><![CDATA[Length of the pole]]></Description>
-					<X>370</X><Y>-70</Y>
+					<X>340</X><Y>-100</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -918,7 +867,7 @@ try{
 							<Code><![CDATA[0.5]]></Code>
 						</DefaultValue>
 						<ParameterEditor>
-							<Id>1532963268726</Id>
+							<Id>1533224271997</Id>
 							<EditorContolType>TEXT_BOX</EditorContolType>
 							<MinSliderValue><![CDATA[0]]></MinSliderValue>
 							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
@@ -927,10 +876,9 @@ try{
 					</Properties>                 
 				</Variable>
 				<Variable Class="Parameter">
-					<Id>1532963301650</Id>
+					<Id>1533224273765</Id>
 					<Name><![CDATA[Pole_Mass_Length]]></Name>
-					<Description><![CDATA[Product of mass and length of the pole. Used inside physicalStep]]></Description>
-					<X>370</X><Y>-40</Y>
+					<X>340</X><Y>-70</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -943,7 +891,31 @@ try{
 							<Code><![CDATA[Mass_Pole*Pole_Length]]></Code>
 						</DefaultValue>
 						<ParameterEditor>
-							<Id>1532963301648</Id>
+							<Id>1533224273763</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1533224276239</Id>
+					<Name><![CDATA[Mass_Pole]]></Name>
+					<X>340</X><Y>-130</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[double]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<DefaultValue Class="CodeValue">
+							<Code><![CDATA[0.1]]></Code>
+						</DefaultValue>
+						<ParameterEditor>
+							<Id>1533224276237</Id>
 							<EditorContolType>TEXT_BOX</EditorContolType>
 							<MinSliderValue><![CDATA[0]]></MinSliderValue>
 							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
@@ -1020,13 +992,13 @@ try{
 				<Line>
 					<Id>1532441174571</Id>
 					<Name><![CDATA[line]]></Name>
-					<Description><![CDATA[The pole agent lives inside the cart agent. Together they form the Mdp agent. The angle of the cart is defined by the state variable theta of the Mdp agent.]]></Description>
 					<X>0</X><Y>0</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
 					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<AsObject>true</AsObject>
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Z>0</Z>
 					<ZHeight>10</ZHeight>
@@ -1051,6 +1023,8 @@ try{
 			<Id>1532521526631</Id>
 			<Name><![CDATA[Mdp]]></Name>
 			<ClientAreaTopLeft><X>0</X><Y>0</Y></ClientAreaTopLeft>
+			<PresentationTopGroupPersistent>true</PresentationTopGroupPersistent>
+			<IconTopGroupPersistent>true</IconTopGroupPersistent>
 			<Import><![CDATA[import org.deeplearning4j.rl4j.mdp.MDP;
 import org.deeplearning4j.rl4j.space.*;
 import org.deeplearning4j.rl4j.space.ActionSpace;
@@ -1104,18 +1078,6 @@ import com.anylogic.libraries.processmodeling.Conveyor.OnExit;]]></Import>
 					<Code><![CDATA[10]]></Code>
 					<Unit Class="SpeedUnits"><![CDATA[MPS]]></Unit>
 				</VelocityCode>
-				<PhysicalLength Class="CodeUnitValue">
-					<Code><![CDATA[1]]></Code>
-					<Unit Class="LengthUnits"><![CDATA[METER]]></Unit>
-				</PhysicalLength>
-				<PhysicalWidth Class="CodeUnitValue">
-					<Code><![CDATA[1]]></Code>
-					<Unit Class="LengthUnits"><![CDATA[METER]]></Unit>
-				</PhysicalWidth>
-				<PhysicalHeight Class="CodeUnitValue">
-					<Code><![CDATA[1]]></Code>
-					<Unit Class="LengthUnits"><![CDATA[METER]]></Unit>
-				</PhysicalHeight>
 			</AgentProperties>
 			<EnvironmentProperties>
 					<EnableSteps>false</EnableSteps>
@@ -1173,7 +1135,7 @@ import com.anylogic.libraries.processmodeling.Conveyor.OnExit;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1532525805562</Id>
 					<Name><![CDATA[x]]></Name>
-					<X>-350</X><Y>120</Y>
+					<X>-230</X><Y>90</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1188,7 +1150,7 @@ import com.anylogic.libraries.processmodeling.Conveyor.OnExit;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1532525805564</Id>
 					<Name><![CDATA[xDot]]></Name>
-					<X>-350</X><Y>160</Y>
+					<X>-230</X><Y>130</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1203,7 +1165,7 @@ import com.anylogic.libraries.processmodeling.Conveyor.OnExit;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1532525805566</Id>
 					<Name><![CDATA[theta]]></Name>
-					<X>-350</X><Y>200</Y>
+					<X>-230</X><Y>170</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1218,7 +1180,7 @@ import com.anylogic.libraries.processmodeling.Conveyor.OnExit;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1532525805568</Id>
 					<Name><![CDATA[thetaDot]]></Name>
-					<X>-350</X><Y>240</Y>
+					<X>-230</X><Y>210</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1233,7 +1195,7 @@ import com.anylogic.libraries.processmodeling.Conveyor.OnExit;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1532525805570</Id>
 					<Name><![CDATA[cosTheta]]></Name>
-					<X>-330</X><Y>340</Y>
+					<X>-170</X><Y>320</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1248,7 +1210,7 @@ import com.anylogic.libraries.processmodeling.Conveyor.OnExit;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1532525805572</Id>
 					<Name><![CDATA[sinTheta]]></Name>
-					<X>-330</X><Y>370</Y>
+					<X>-170</X><Y>350</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1263,7 +1225,7 @@ import com.anylogic.libraries.processmodeling.Conveyor.OnExit;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1532525805574</Id>
 					<Name><![CDATA[force]]></Name>
-					<X>-430</X><Y>340</Y>
+					<X>-280</X><Y>320</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1278,7 +1240,7 @@ import com.anylogic.libraries.processmodeling.Conveyor.OnExit;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1532525805576</Id>
 					<Name><![CDATA[temp]]></Name>
-					<X>-430</X><Y>380</Y>
+					<X>-280</X><Y>360</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1293,7 +1255,7 @@ import com.anylogic.libraries.processmodeling.Conveyor.OnExit;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1532525805578</Id>
 					<Name><![CDATA[thetaAcc]]></Name>
-					<X>-430</X><Y>420</Y>
+					<X>-280</X><Y>400</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1308,7 +1270,7 @@ import com.anylogic.libraries.processmodeling.Conveyor.OnExit;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1532525805580</Id>
 					<Name><![CDATA[xAcc]]></Name>
-					<X>-430</X><Y>460</Y>
+					<X>-280</X><Y>440</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1321,9 +1283,9 @@ import com.anylogic.libraries.processmodeling.Conveyor.OnExit;]]></Import>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
-					<Id>1532962153915</Id>
+					<Id>1533224569521</Id>
 					<Name><![CDATA[Iteration]]></Name>
-					<X>-430</X><Y>540</Y>
+					<X>-320</X><Y>520</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1336,9 +1298,9 @@ import com.anylogic.libraries.processmodeling.Conveyor.OnExit;]]></Import>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
-					<Id>1532962283181</Id>
+					<Id>1533224572285</Id>
 					<Name><![CDATA[Epoch]]></Name>
-					<X>-330</X><Y>540</Y>
+					<X>-220</X><Y>520</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1351,9 +1313,9 @@ import com.anylogic.libraries.processmodeling.Conveyor.OnExit;]]></Import>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
-					<Id>1533202140759</Id>
+					<Id>1533224574801</Id>
 					<Name><![CDATA[EpochIteration]]></Name>
-					<X>-430</X><Y>570</Y>
+					<X>-320</X><Y>550</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1366,10 +1328,9 @@ import com.anylogic.libraries.processmodeling.Conveyor.OnExit;]]></Import>
 					</Properties>
 				</Variable>
 				<Variable Class="Parameter">
-					<Id>1532963841804</Id>
+					<Id>1533224654914</Id>
 					<Name><![CDATA[Gravity]]></Name>
-					<Description><![CDATA[The gravitational constant]]></Description>
-					<X>410</X><Y>-130</Y>
+					<X>450</X><Y>-160</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1382,7 +1343,7 @@ import com.anylogic.libraries.processmodeling.Conveyor.OnExit;]]></Import>
 							<Code><![CDATA[9.8]]></Code>
 						</DefaultValue>
 						<ParameterEditor>
-							<Id>1532963841802</Id>
+							<Id>1533224654912</Id>
 							<EditorContolType>TEXT_BOX</EditorContolType>
 							<MinSliderValue><![CDATA[0]]></MinSliderValue>
 							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
@@ -1391,159 +1352,9 @@ import com.anylogic.libraries.processmodeling.Conveyor.OnExit;]]></Import>
 					</Properties>                 
 				</Variable>
 				<Variable Class="Parameter">
-					<Id>1532963855494</Id>
-					<Name><![CDATA[Force_Mag]]></Name>
-					<Description><![CDATA[Factor magnifying action to convert into force applied to cart]]></Description>
-					<X>410</X><Y>-100</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[double]]></Type>
-						<UnitType><![CDATA[NONE]]></UnitType>
-						<SdArray>false</SdArray>
-						<DefaultValue Class="CodeValue">
-							<Code><![CDATA[10]]></Code>
-						</DefaultValue>
-						<ParameterEditor>
-							<Id>1532963855492</Id>
-							<EditorContolType>TEXT_BOX</EditorContolType>
-							<MinSliderValue><![CDATA[0]]></MinSliderValue>
-							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
-							<DelimeterType>NO_DELIMETER</DelimeterType>
-						</ParameterEditor>
-					</Properties>                 
-				</Variable>
-				<Variable Class="Parameter">
-					<Id>1532963924794</Id>
-					<Name><![CDATA[Tau]]></Name>
-					<Description><![CDATA[Time-parameter used to update state variables in a physically realistic fashion]]></Description>
-					<X>410</X><Y>-70</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[double]]></Type>
-						<UnitType><![CDATA[NONE]]></UnitType>
-						<SdArray>false</SdArray>
-						<DefaultValue Class="CodeValue">
-							<Code><![CDATA[0.02]]></Code>
-						</DefaultValue>
-						<ParameterEditor>
-							<Id>1532963924792</Id>
-							<EditorContolType>TEXT_BOX</EditorContolType>
-							<MinSliderValue><![CDATA[0]]></MinSliderValue>
-							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
-							<DelimeterType>NO_DELIMETER</DelimeterType>
-						</ParameterEditor>
-					</Properties>                 
-				</Variable>
-				<Variable Class="Parameter">
-					<Id>1532963924797</Id>
-					<Name><![CDATA[Displacement_Coef]]></Name>
-					<Description><![CDATA[Magnify the rendered movement of the cart to make its movements visible]]></Description>
-					<X>410</X><Y>-40</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[double]]></Type>
-						<UnitType><![CDATA[NONE]]></UnitType>
-						<SdArray>false</SdArray>
-						<DefaultValue Class="CodeValue">
-							<Code><![CDATA[100]]></Code>
-						</DefaultValue>
-						<ParameterEditor>
-							<Id>1532963924795</Id>
-							<EditorContolType>TEXT_BOX</EditorContolType>
-							<MinSliderValue><![CDATA[0]]></MinSliderValue>
-							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
-							<DelimeterType>NO_DELIMETER</DelimeterType>
-						</ParameterEditor>
-					</Properties>                 
-				</Variable>
-				<Variable Class="Parameter">
-					<Id>1532964219188</Id>
-					<Name><![CDATA[xTreshold]]></Name>
-					<Description><![CDATA[Threshold value of x (the position of the cart)]]></Description>
-					<X>580</X><Y>-130</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[double]]></Type>
-						<UnitType><![CDATA[NONE]]></UnitType>
-						<SdArray>false</SdArray>
-						<DefaultValue Class="CodeValue">
-							<Code><![CDATA[2.4]]></Code>
-						</DefaultValue>
-						<ParameterEditor>
-							<Id>1532964219186</Id>
-							<EditorContolType>TEXT_BOX</EditorContolType>
-							<MinSliderValue><![CDATA[0]]></MinSliderValue>
-							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
-							<DelimeterType>NO_DELIMETER</DelimeterType>
-						</ParameterEditor>
-					</Properties>                 
-				</Variable>
-				<Variable Class="Parameter">
-					<Id>1532964224189</Id>
-					<Name><![CDATA[thetaThreshold]]></Name>
-					<Description><![CDATA[Threshold value of theta (the angle of the pole)]]></Description>
-					<X>580</X><Y>-100</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[double]]></Type>
-						<UnitType><![CDATA[NONE]]></UnitType>
-						<SdArray>false</SdArray>
-						<DefaultValue Class="CodeValue">
-							<Code><![CDATA[12 * 2 * PI / 360]]></Code>
-						</DefaultValue>
-						<ParameterEditor>
-							<Id>1532964224187</Id>
-							<EditorContolType>TEXT_BOX</EditorContolType>
-							<MinSliderValue><![CDATA[0]]></MinSliderValue>
-							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
-							<DelimeterType>NO_DELIMETER</DelimeterType>
-						</ParameterEditor>
-					</Properties>                 
-				</Variable>
-				<Variable Class="Parameter">
-					<Id>1532964226696</Id>
-					<Name><![CDATA[Action_Space_Size]]></Name>
-					<Description><![CDATA[The number of available actions in our environment. Must be type Int!!!]]></Description>
-					<X>580</X><Y>-70</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[int]]></Type>
-						<UnitType><![CDATA[NONE]]></UnitType>
-						<SdArray>false</SdArray>
-						<DefaultValue Class="CodeValue">
-							<Code><![CDATA[2]]></Code>
-						</DefaultValue>
-						<ParameterEditor>
-							<Id>1532964226694</Id>
-							<EditorContolType>TEXT_BOX</EditorContolType>
-							<MinSliderValue><![CDATA[0]]></MinSliderValue>
-							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
-							<DelimeterType>NO_DELIMETER</DelimeterType>
-						</ParameterEditor>
-					</Properties>                 
-				</Variable>
-				<Variable Class="Parameter">
-					<Id>1533202244136</Id>
+					<Id>1533224657424</Id>
 					<Name><![CDATA[MaxStep]]></Name>
-					<X>580</X><Y>-40</Y>
+					<X>650</X><Y>-70</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1556,7 +1367,151 @@ import com.anylogic.libraries.processmodeling.Conveyor.OnExit;]]></Import>
 							<Code><![CDATA[0]]></Code>
 						</DefaultValue>
 						<ParameterEditor>
-							<Id>1533202244134</Id>
+							<Id>1533224657422</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1533224657783</Id>
+					<Name><![CDATA[xThreshold]]></Name>
+					<X>650</X><Y>-160</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[double]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<DefaultValue Class="CodeValue">
+							<Code><![CDATA[2.4]]></Code>
+						</DefaultValue>
+						<ParameterEditor>
+							<Id>1533224657781</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1533224657986</Id>
+					<Name><![CDATA[Tau]]></Name>
+					<X>450</X><Y>-100</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[double]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<DefaultValue Class="CodeValue">
+							<Code><![CDATA[0.02]]></Code>
+						</DefaultValue>
+						<ParameterEditor>
+							<Id>1533224657984</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1533224658330</Id>
+					<Name><![CDATA[Displacement_Coef]]></Name>
+					<X>450</X><Y>-70</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[double]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<DefaultValue Class="CodeValue">
+							<Code><![CDATA[100]]></Code>
+						</DefaultValue>
+						<ParameterEditor>
+							<Id>1533224658328</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1533224658506</Id>
+					<Name><![CDATA[Force_Mag]]></Name>
+					<X>450</X><Y>-130</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[double]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<DefaultValue Class="CodeValue">
+							<Code><![CDATA[10]]></Code>
+						</DefaultValue>
+						<ParameterEditor>
+							<Id>1533224658504</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1533224667331</Id>
+					<Name><![CDATA[thetaThreshold]]></Name>
+					<X>650</X><Y>-130</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[double]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<DefaultValue Class="CodeValue">
+							<Code><![CDATA[12 * 2 * PI / 360]]></Code>
+						</DefaultValue>
+						<ParameterEditor>
+							<Id>1533224667329</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1533224667520</Id>
+					<Name><![CDATA[Action_Space_Size]]></Name>
+					<X>650</X><Y>-100</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[int]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<DefaultValue Class="CodeValue">
+							<Code><![CDATA[2]]></Code>
+						</DefaultValue>
+						<ParameterEditor>
+							<Id>1533224667518</Id>
 							<EditorContolType>TEXT_BOX</EditorContolType>
 							<MinSliderValue><![CDATA[0]]></MinSliderValue>
 							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
@@ -1572,7 +1527,7 @@ import com.anylogic.libraries.processmodeling.Conveyor.OnExit;]]></Import>
 					<Id>1532521735433</Id>
 					<Name><![CDATA[getObservationSpace]]></Name>
 					<Description><![CDATA[Here we are using the CartPoleObservationSpace class we created in order to create a representation of the observation space which will be understood by DL4J. .]]></Description>
-					<X>-720</X><Y>160</Y>
+					<X>-560</X><Y>60</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1580,7 +1535,7 @@ import com.anylogic.libraries.processmodeling.Conveyor.OnExit;]]></Import>
 					<Body><![CDATA[if(main.Train==true){
 traceln("A representation of the observation space is created");
 }
-CartPoleObservationSpace os = new CartPoleObservationSpace(xTreshold, thetaThreshold);
+CartPoleObservationSpace os = new CartPoleObservationSpace(xThreshold, thetaThreshold);
 return os;]]></Body>
 				</Function>
 				<Function AccessType="public" StaticFunction="false">
@@ -1589,7 +1544,7 @@ return os;]]></Body>
 					<Id>1532521757529</Id>
 					<Name><![CDATA[getActionSpace]]></Name>
 					<Description><![CDATA[Here we are using the DiscreteSpace class from DL4J to create an ActionSpace object. ActionSpace will contain not only the size of the action space (2) but also a seed and a random action sampled from the action space which may be used for exploration.]]></Description>
-					<X>-720</X><Y>190</Y>
+					<X>-560</X><Y>90</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1606,7 +1561,7 @@ return (AS) as;]]></Body>
 					<Id>1532521779566</Id>
 					<Name><![CDATA[step]]></Name>
 					<Description><![CDATA[DL4J expects the StepReply (i.e. the information about the consequences of having taken the instructed action) to come in the certain format. For this we are using the StepReply class from DL4J which takes as inputs an observation (created using the ObservationEnc class we created, the reward (which is always equal to 1 in the cartpole example), and the boolean variable "done" which signifies whether or not the current epoch is over (it is over if the pole fell or we are outside the threshold for x). The object "info" is required as input by stepReply but not needed for our project since it is used for interfacing with Python which we do not do. Hence it is left empty.]]></Description>
-					<X>-720</X><Y>220</Y>
+					<X>-560</X><Y>120</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1623,7 +1578,7 @@ ObservationEnc myObservation = physicalStep(action);
 
 //-----Done-----
 boolean done;
-if(abs(x) > xTreshold || abs(theta) > thetaThreshold){
+if(abs(x) > xThreshold || abs(theta) > thetaThreshold){
 	 done = true;
 }else{
 	 done =  false;
@@ -1654,13 +1609,13 @@ return myStepReply;]]></Body>
 					<Id>1532521791118</Id>
 					<Name><![CDATA[isDone]]></Name>
 					<Description><![CDATA[This function is called periodically in order to check whether the environment needs to be reset.]]></Description>
-					<X>-720</X><Y>270</Y>
+					<X>-560</X><Y>170</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[boolean done;
-if(abs(x) > xTreshold || abs(theta) > thetaThreshold || EpochIteration > MaxStep-1){
+if(abs(x) > xThreshold || abs(theta) > thetaThreshold || EpochIteration > MaxStep-1){
 	done = true;
 }else{
 	done = false;
@@ -1676,7 +1631,7 @@ return done;]]></Body>
 					<Id>1532521813279</Id>
 					<Name><![CDATA[reset]]></Name>
 					<Description><![CDATA[This function is called when the environment needs to be reset (for instance because the pole fell or the current episode has arrived at step 200). In this case, all the intermediate variables are set back to 0 and the state variables are initialised randomly using the same distribution and support as in the DL4J examples. The value of the state variables is then formatted using our ObservationEnc class.]]></Description>
-					<X>-720</X><Y>300</Y>
+					<X>-560</X><Y>200</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1721,7 +1676,7 @@ return (O) oe;]]></Body>
 					<Id>1532521823962</Id>
 					<Name><![CDATA[close]]></Name>
 					<Description><![CDATA[As mentioned, DL4J expects the class Mdp to possess a method called "close". In the original version, this function closes the connection to the local server which is used to interact with the Python OpenAI environment. Since we do not need this functionality here we may instead use the function to finish the Anylogic simulation if we want the simulation to stop when the training is finished.]]></Description>
-					<X>-720</X><Y>330</Y>
+					<X>-560</X><Y>230</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1738,7 +1693,7 @@ return;
 					<Id>1532533187210</Id>
 					<Name><![CDATA[newInstance]]></Name>
 					<Description><![CDATA[As with close(), DL4J expects the MDP class to possess this method and will complain if it does not exist but it is not called in the current example. By our understanding, it is used in other examples (e.g. Asynchronous learning) to create new instances of the MDP class during training.]]></Description>
-					<X>-720</X><Y>360</Y>
+					<X>-560</X><Y>260</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1753,7 +1708,7 @@ return (Mdp) main.mdps.get(main.mdps.size());]]></Body>
 					<Id>1532592719122</Id>
 					<Name><![CDATA[physicalStep]]></Name>
 					<Description><![CDATA[Based on the action input received from the training algorithm, this function performs the actual "physical" step in the environment we create. It calculates the force based on the action instruction received and then calculates the new value of the state variables. It also adjusts the presentation of the cartpole based on the value of the state variables although this is not rendered since simulation time stops as soon as the train() function is called inside CartPoleBegin. Finally, it uses the class "ObservationEnc" which we created in order to bring the new state variables into a format which can be understood by the learning algorithm.]]></Description>
-					<X>-700</X><Y>240</Y>
+					<X>-550</X><Y>140</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1839,7 +1794,7 @@ return output;]]></Body>
 				<EmbeddedObject>
 					<Id>1532598846662</Id>
 					<Name><![CDATA[cart]]></Name>
-					<X>-100</X><Y>100</Y>
+					<X>-110</X><Y>40</Y>
 					<Label><X>-15</X><Y>-30</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1914,12 +1869,13 @@ return output;]]></Body>
 				<EmbeddedObjectPresentation>
 					<Id>1532598849002</Id>
 					<Name><![CDATA[cart_presentation]]></Name>
-					<X>270</X><Y>-30</Y>
+					<X>280</X><Y>-30</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
 					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<AsObject>true</AsObject>
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Z>0</Z>
 					<Rotation>0.0</Rotation>
@@ -1931,19 +1887,20 @@ return output;]]></Body>
 					<Longitude>0.0</Longitude>
 				</EmbeddedObjectPresentation>
 				<Text>
-					<Id>1532943584308</Id>
+					<Id>1533224444333</Id>
 					<Name><![CDATA[text]]></Name>
-					<X>-360</X><Y>80</Y>
+					<X>-290</X><Y>50</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>false</PublicFlag>
+					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
 					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<AsObject>true</AsObject>
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Z>0</Z>
 					<Rotation>0.0</Rotation>
 					<Color>-16777216</Color>
-					<Text><![CDATA[State variables]]></Text>
+					<Text><![CDATA[State Variables]]></Text>
 					<Font>
 						<Name>SansSerif</Name>
 						<Size>20</Size>
@@ -1952,14 +1909,15 @@ return output;]]></Body>
 					<Alignment>LEFT</Alignment>
 				</Text>
 				<Text>
-					<Id>1532943667947</Id>
+					<Id>1533224496032</Id>
 					<Name><![CDATA[text1]]></Name>
-					<X>-440</X><Y>300</Y>
+					<X>-360</X><Y>280</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>false</PublicFlag>
+					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
 					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<AsObject>true</AsObject>
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Z>0</Z>
 					<Rotation>0.0</Rotation>
@@ -1973,14 +1931,15 @@ return output;]]></Body>
 					<Alignment>LEFT</Alignment>
 				</Text>
 				<Text>
-					<Id>1532962936377</Id>
+					<Id>1533224548117</Id>
 					<Name><![CDATA[text2]]></Name>
-					<X>-440</X><Y>500</Y>
+					<X>-340</X><Y>480</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>false</PublicFlag>
+					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
 					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<AsObject>true</AsObject>
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Z>0</Z>
 					<Rotation>0.0</Rotation>
@@ -2033,8 +1992,7 @@ return output;]]></Body>
 			<ExecutionMode>realTimeScaled</ExecutionMode>
 			<RealTimeScale>1.0</RealTimeScale>
 			<EnableZoomAndPanning>true</EnableZoomAndPanning>
-			<EnableDeveloperPanel>false</EnableDeveloperPanel>
-			<ShowDeveloperPanelOnStart>false</ShowDeveloperPanelOnStart>
+			<Maximized>false</Maximized>
 		</AnimationProperties>
 		<Inputs>		
 		</Inputs>
@@ -2047,6 +2005,8 @@ return output;]]></Body>
 			<Id>1532438531949</Id>
 			<Name><![CDATA[Simulation]]></Name>
 			<ClientAreaTopLeft><X>0</X><Y>0</Y></ClientAreaTopLeft>
+			<PresentationTopGroupPersistent>true</PresentationTopGroupPersistent>
+			<IconTopGroupPersistent>true</IconTopGroupPersistent>
 			<Import><![CDATA[import java.io.File;]]></Import>
 			<CommandLineArguments><![CDATA[]]></CommandLineArguments>
 			<InitialSetupCode><![CDATA[File f = new File("logs/application.log");
@@ -2072,6 +2032,7 @@ return output;]]></Body>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
 					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<AsObject>true</AsObject>
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Z>0</Z>
 					<Rotation>0.0</Rotation>
@@ -2095,13 +2056,15 @@ return output;]]></Body>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
-					<BasicProperties Width="100" Height="30">
-                        <EmbeddedIcon>false</EmbeddedIcon>	
+					<BasicProperties Width="100" Height="30" 
+				AsObject="true">
+                        <EmbeddedIcon>false</EmbeddedIcon>				
+						<FillColor/>
 						<TextColor/>
 						<Enabled>true</Enabled>
 						<ActionCode><![CDATA[if ( getState() == IDLE )
 	run();
-getExperimentHost().setPresentable( getEngine().getRoot() );]]></ActionCode>
+getPresentation().setPresentable( getEngine().getRoot() );]]></ActionCode>
 					</BasicProperties>
 					<ExtendedProperties>
 						<Font Name="Dialog" Size="11" Style="0"/>
@@ -2115,13 +2078,35 @@ getExperimentHost().setPresentable( getEngine().getRoot() );]]></ActionCode>
 
 			<Parameters>			
 			</Parameters>			
-			<PresentationProperties>
+			<PresentationProperties 
+				EnableAdaptiveFrameManagement="true" 
+				EnableAntiAliasing="true"
+				EnableEnhancedModelElementsAnimation="true"
+				ToolbarCustomizableAtRuntime="true">
+				<Maximized>false</Maximized>
+				<CloseConfirmation>false</CloseConfirmation>
 				<EnableZoomAndPanning>true</EnableZoomAndPanning>
 				<ExecutionMode><![CDATA[realTimeScaled]]></ExecutionMode>
+				<CpuRatio><![CDATA[ratio_1_2]]></CpuRatio>	        
 				<Title><![CDATA[CartPole : Simulation]]></Title>	
-				<EnableDeveloperPanel>true</EnableDeveloperPanel>
-				<ShowDeveloperPanelOnStart>false</ShowDeveloperPanelOnStart>
+				<FramesPerSecond><![CDATA[20.0]]></FramesPerSecond>
 				<RealTimeScale>1.0</RealTimeScale>
+				<UIProperty Name="Experiment Progress" Value="false"/>
+				<UIProperty Name="Simulation Progress" Value="true"/>
+				<UIProperty Name="Statusbar Events Per Second" Value="false"/>
+				<UIProperty Name="Statusbar Frames Per Second" Value="false"/>
+				<UIProperty Name="Statusbar Memory" Value="true"/>
+				<UIProperty Name="Statusbar Model Date" Value="true"/>
+				<UIProperty Name="Statusbar Model Step" Value="false"/>
+				<UIProperty Name="Statusbar Model Time" Value="true"/>
+				<UIProperty Name="Statusbar Real Time Of Simulation" Value="false"/>
+				<UIProperty Name="Statusbar Status" Value="true"/>
+				<UIProperty Name="Toolbar Animation setup" Value="false"/>
+				<UIProperty Name="Toolbar Execution control" Value="true"/>
+				<UIProperty Name="Toolbar File" Value="false"/>
+				<UIProperty Name="Toolbar Model navigation" Value="true"/>
+				<UIProperty Name="Toolbar Time scale setup" Value="true"/>
+				<UIProperty Name="Toolbar View" Value="false"/>
 			</PresentationProperties>
 			<ModelTimeProperties>
 				<StopOption><![CDATA[Never]]></StopOption>
@@ -2367,6 +2352,46 @@ public class CartPoleBegin implements Serializable {
 		</JavaClass>
 		<!--   =========   Java Class   ========  -->
 		<JavaClass>
+			<Id>1532607105918</Id>
+			<Name><![CDATA[Constants]]></Name>
+			<Text><![CDATA[/**
+ * Constants
+ */	
+public class Constants implements Serializable {
+
+    /**
+     * Default constructor
+     */
+	final static public int ACTION_SPACE_SIZE = 2;
+	final static public double DISPLACEMENT_COEF = 100;
+	final static public double TAU = 0.02;
+	final static public double MASS_CART = 1.;
+	final static public double MASS_POLE = 0.1;
+	final static public double GRAVITY = 9.8;
+	final static public double TOTALMASS = MASS_POLE + MASS_CART;
+	final static public double POLE_LENGTH = 0.5;
+	final static public double POLE_MASS_LENGTH = MASS_POLE * POLE_LENGTH;
+	final static public double FORCE_MAG = 10;
+	final static public double X_THRESHOLD = 2.4;
+	final static public double THETA_THRESHOLD = 12 * 2 * PI / 360;
+	
+	
+	
+	@Override
+	public String toString() {
+		return super.toString();
+	}
+
+	/**
+	 * This number is here for model snapshot storing purpose<br>
+	 * It needs to be changed when this class gets changed
+	 */ 
+	private static final long serialVersionUID = 1L;
+
+}]]></Text>
+		</JavaClass>
+		<!--   =========   Java Class   ========  -->
+		<JavaClass>
 			<Id>1532616681314</Id>
 			<Name><![CDATA[ObservationEnc]]></Name>
 			<Text><![CDATA[/*
@@ -2416,13 +2441,13 @@ public class ObservationEnc implements Serializable, Encodable {
 		</JavaClass>
 		<!--   =========   Java Class   ========  -->
 		<JavaClass>
-			<Id>1533030415476</Id>
+			<Id>1533223724249</Id>
 			<Name><![CDATA[TrainedCartPole]]></Name>
 			<Text><![CDATA[/*
- This class is used to create a "trained Cartpole", i.e. an instance of the MDP together with the policy which
- was learned during the training phase. This can be used to demonstrate whether or not the neural net successfully
- learned to solve the task.
- */
+This class is used to create a "trained Cartpole", i.e. an instance of the MDP together with the policy which
+was learned during the training phase. This can be used to demonstrate whether or not the neural net successfully
+learned to solve the task.
+*/
 import java.io.IOException;
 import org.deeplearning4j.rl4j.space.Box;
 import org.deeplearning4j.rl4j.learning.sync.qlearning.QLearning;
@@ -2436,54 +2461,54 @@ import org.nd4j.linalg.learning.config.Adam;
 
 public class TrainedCartPole implements Serializable {
 
-    public static QLearning.QLConfiguration CARTPOLE_QL =
-            new QLearning.QLConfiguration(
-                    123,    //Random seed -> self-explanatory. There are 2 sources of randomness in the present application, one being the e-greedy policy and the other the random initialisation of the state variables whenever reset is called
-                    200,    //Max step By epoch -> this gives the maximum number of steps in an "epoch", i.e. in one round of the "game". In the case of cartpole, an epoch ends when the pole "falls over" (exceeds the threshold for theta), when the cart moves outside of the threshold for x, or when the algorithm has kept the pole upright for 200 steps
-                    150000, 		//Max step --> this is the overall maximum number of steps that can be taken in one round of training consisting of multiple "epochs"
-                    150000, 		//Max size of experience replay --> this is the maximum size of the "experience", i.e. the memory of past results which is stored and used in random batches to update the current network
-                    32,     //size of batches --> this is the size of the batches of experiences (i.e. combinations of prior state, action, posterior state and reward) which are used at each step for updating the current neural network
-                    500,    //target update (hard) --> This is the frequency with which the target network (the one which will hopefully learn the optimal policy) is updated. We are performing a hard update meaning that every 500 steps, the current network is copied to become the new target network
-                    10,     //num step noop warmup --> This is the number of steps at the beginning for which we simply take random actions in order to build up a buffer of experiences
-                    0.01,   //reward scaling --> rewards are scaled by this factor before being fed into the network.
-                    0.99,   //gamma --> this is the discount factor which is applied to expected future rewards in calculating the q-value of a given state
-                    1.0,    //td-error clipping --> Error clipping is used to prevent outliers from having too much weight in updating the network. "Extreme" observations are rescaled using this parameter. 
-                    0.1f,   //min epsilon --> This is the value to which the parameter epsilon will eventually converge over time. It starts off at a higher value to ensure more exploration in initial stages
-                    1000,   //num step for eps greedy anneal --> this sets the speed at which epsilon declines from its initial value to its minimum set above.
-                    true    //double DQN --> We choose whether or not we wish to use the Double DQN algorithm (as opposed to "simple" DQN).
-            );
+   public static QLearning.QLConfiguration CARTPOLE_QL =
+           new QLearning.QLConfiguration(
+                   123,    //Random seed -> self-explanatory. There are 2 sources of randomness in the present application, one being the e-greedy policy and the other the random initialisation of the state variables whenever reset is called
+                   200,    //Max step By epoch -> this gives the maximum number of steps in an "epoch", i.e. in one round of the "game". In the case of cartpole, an epoch ends when the pole "falls over" (exceeds the threshold for theta), when the cart moves outside of the threshold for x, or when the algorithm has kept the pole upright for 200 steps
+                   150000, 		//Max step --> this is the overall maximum number of steps that can be taken in one round of training consisting of multiple "epochs"
+                   150000, 		//Max size of experience replay --> this is the maximum size of the "experience", i.e. the memory of past results which is stored and used in random batches to update the current network
+                   32,     //size of batches --> this is the size of the batches of experiences (i.e. combinations of prior state, action, posterior state and reward) which are used at each step for updating the current neural network
+                   500,    //target update (hard) --> This is the frequency with which the target network (the one which will hopefully learn the optimal policy) is updated. We are performing a hard update meaning that every 500 steps, the current network is copied to become the new target network
+                   10,     //num step noop warmup --> This is the number of steps at the beginning for which we simply take random actions in order to build up a buffer of experiences
+                   0.01,   //reward scaling --> rewards are scaled by this factor before being fed into the network.
+                   0.99,   //gamma --> this is the discount factor which is applied to expected future rewards in calculating the q-value of a given state
+                   1.0,    //td-error clipping --> Error clipping is used to prevent outliers from having too much weight in updating the network. "Extreme" observations are rescaled using this parameter. 
+                   0.1f,   //min epsilon --> This is the value to which the parameter epsilon will eventually converge over time. It starts off at a higher value to ensure more exploration in initial stages
+                   1000,   //num step for eps greedy anneal --> this sets the speed at which epsilon declines from its initial value to its minimum set above.
+                   true    //double DQN --> We choose whether or not we wish to use the Double DQN algorithm (as opposed to "simple" DQN).
+           );
 	
-    public static void loadCartpole(Main main) throws IOException {
-        //Create the new CartPole
-    	Mdp TrainedCart = null;
-        try {
-        	traceln("We create a new Cartpole agent and add it to the environment");
-        	TrainedCart = main.createMDP();
-        	TrainedCart.MaxStep = CARTPOLE_QL.getMaxEpochStep();
-        	TrainedCart.Iteration = 0;
-        	traceln("Agent created successfully");
-        	traceln("");
-        } catch (RuntimeException e){
-            traceln("Error at creating the trained Agent");
-        }
-        
-        //load the policy which was learned and saved during the training phase
-        traceln("We load the trained policy");
-        DQNPolicy<Box> pol2 = DQNPolicy.load("/tmp/pol1");
-        //run the agent for i epochs (rounds) and observe the rewards
-        traceln("Starting simulation of the trained agent");
-        double rewards = 0;
-        double nTests = 3;
-        for (int i = 0; i < nTests; i++) {
-        	TrainedCart.reset();
-            double reward = pol2.play(TrainedCart);
-            rewards += reward;
-            traceln("The cumulative reward is " + rewards);
-        }
+   public static void loadCartpole(Main main) throws IOException {
+       //Create the new CartPole
+   	Mdp TrainedCart = null;
+       try {
+       	traceln("We create a new Cartpole agent and add it to the environment");
+       	TrainedCart = main.createMDP();
+       	TrainedCart.MaxStep = CARTPOLE_QL.getMaxEpochStep();
+       	TrainedCart.Iteration = 0;
+       	traceln("Agent created successfully");
+       	traceln("");
+       } catch (RuntimeException e){
+           traceln("Error at creating the trained Agent");
+       }
+       
+       //load the policy which was learned and saved during the training phase
+       traceln("We load the trained policy");
+       DQNPolicy<Box> pol2 = DQNPolicy.load("/tmp/pol1");
+       //run the agent for i epochs (rounds) and observe the rewards
+       traceln("Starting simulation of the trained agent");
+       double rewards = 0;
+       double nTests = 3;
+       for (int i = 0; i < nTests; i++) {
+       	TrainedCart.reset();
+           double reward = pol2.play(TrainedCart);
+           rewards += reward;
+           traceln("The cumulative reward is " + rewards);
+       }
 
-        traceln("The average reward for a trained epoch is " + rewards/nTests);
+       traceln("The average reward for a trained epoch is " + rewards/nTests);
 
-    }
+   }
 
 	/**
 	 * This number is here for model snapshot storing purpose<br>
