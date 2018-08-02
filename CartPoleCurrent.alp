@@ -18,7 +18,7 @@
 			<Name><![CDATA[Main]]></Name>
 			<ClientAreaTopLeft><X>0</X><Y>0</Y></ClientAreaTopLeft>
 			<Import><![CDATA[import org.deeplearning4j.rl4j.space.ActionSpace;
-
+import java.io.File;
 import java.io.IOException;
 import org.deeplearning4j.rl4j.space.Box;
 import org.deeplearning4j.rl4j.learning.sync.qlearning.QLearning;
@@ -140,6 +140,23 @@ import java.util.logging.Logger;]]></Import>
 				<InheritedFromParentAgentType>true</InheritedFromParentAgentType>
 			</ScaleRuler>
 			<ConnectionsId>1532438531943</ConnectionsId>
+			<Variables>
+				<Variable Class="PlainVariable">
+					<Id>1533215129507</Id>
+					<Name><![CDATA[Train]]></Name>
+					<X>-160</X><Y>100</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[boolean]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[true]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+			</Variables>
 			<Functions>
 				<Function AccessType="public" StaticFunction="false">
 					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
@@ -235,6 +252,9 @@ return myMdp;]]></Body>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[Action_Space_Size]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[MaxStep]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
@@ -342,7 +362,8 @@ return myMdp;]]></Body>
                         <EmbeddedIcon>false</EmbeddedIcon>	
 						<TextColor/>
 						<Enabled>true</Enabled>
-						<ActionCode><![CDATA[try{
+						<ActionCode><![CDATA[Train=false;
+try{
 	TrainedCartPole.loadCartpole(Main.this);
 }catch(Exception e){
  traceln("ERROR at TRAINED Button");
@@ -1329,11 +1350,26 @@ import com.anylogic.libraries.processmodeling.Conveyor.OnExit;]]></Import>
 						</InitialValue>
 					</Properties>
 				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1533202140759</Id>
+					<Name><![CDATA[EpochIteration]]></Name>
+					<X>-430</X><Y>570</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[int]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
 				<Variable Class="Parameter">
 					<Id>1532963841804</Id>
 					<Name><![CDATA[Gravity]]></Name>
 					<Description><![CDATA[The gravitational constant]]></Description>
-					<X>440</X><Y>-130</Y>
+					<X>410</X><Y>-130</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1358,7 +1394,7 @@ import com.anylogic.libraries.processmodeling.Conveyor.OnExit;]]></Import>
 					<Id>1532963855494</Id>
 					<Name><![CDATA[Force_Mag]]></Name>
 					<Description><![CDATA[Factor magnifying action to convert into force applied to cart]]></Description>
-					<X>440</X><Y>-100</Y>
+					<X>410</X><Y>-100</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1383,7 +1419,7 @@ import com.anylogic.libraries.processmodeling.Conveyor.OnExit;]]></Import>
 					<Id>1532963924794</Id>
 					<Name><![CDATA[Tau]]></Name>
 					<Description><![CDATA[Time-parameter used to update state variables in a physically realistic fashion]]></Description>
-					<X>440</X><Y>-70</Y>
+					<X>410</X><Y>-70</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1408,7 +1444,7 @@ import com.anylogic.libraries.processmodeling.Conveyor.OnExit;]]></Import>
 					<Id>1532963924797</Id>
 					<Name><![CDATA[Displacement_Coef]]></Name>
 					<Description><![CDATA[Magnify the rendered movement of the cart to make its movements visible]]></Description>
-					<X>440</X><Y>-40</Y>
+					<X>410</X><Y>-40</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1504,6 +1540,30 @@ import com.anylogic.libraries.processmodeling.Conveyor.OnExit;]]></Import>
 						</ParameterEditor>
 					</Properties>                 
 				</Variable>
+				<Variable Class="Parameter">
+					<Id>1533202244136</Id>
+					<Name><![CDATA[MaxStep]]></Name>
+					<X>580</X><Y>-40</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[int]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<DefaultValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</DefaultValue>
+						<ParameterEditor>
+							<Id>1533202244134</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
 			</Variables>
 			<Functions>
 				<Function AccessType="public" StaticFunction="false">
@@ -1517,7 +1577,9 @@ import com.anylogic.libraries.processmodeling.Conveyor.OnExit;]]></Import>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[traceln("A representation of the observation space is created");
+					<Body><![CDATA[if(main.Train==true){
+traceln("A representation of the observation space is created");
+}
 CartPoleObservationSpace os = new CartPoleObservationSpace(xTreshold, thetaThreshold);
 return os;]]></Body>
 				</Function>
@@ -1532,7 +1594,9 @@ return os;]]></Body>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[traceln("A representation of the space of available actions is created");
+					<Body><![CDATA[if(main.Train==true){
+traceln("A representation of the space of available actions is created");
+}
 ActionSpace as = new DiscreteSpace(Action_Space_Size);
 return (AS) as;]]></Body>
 				</Function>
@@ -1551,7 +1615,9 @@ return (AS) as;]]></Body>
 						<Name><![CDATA[action]]></Name>
 						<Type><![CDATA[Object]]></Type>
 					</Parameter>
-					<Body><![CDATA[traceln("Action instruction received, step phase entered");
+					<Body><![CDATA[if(main.Train==true){
+traceln("Action instruction received, step phase entered");
+}
 //-----Observation-----
 ObservationEnc myObservation = physicalStep(action);
 
@@ -1571,10 +1637,13 @@ double reward = 1.;
 
 JSONObject info = new JSONObject("{}");
 //
+if(main.Train==true){
 traceln("The reward is " + reward);
 traceln("The step function creates a step reply to summarise the effects of the action.");
 traceln("");
+}
 Iteration += 1;
+EpochIteration += 1;
 traceln("Beginning interation number " + Iteration);
 StepReply myStepReply = new StepReply(myObservation, reward, done, info);
 return myStepReply;]]></Body>
@@ -1591,12 +1660,14 @@ return myStepReply;]]></Body>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[boolean done;
-if(abs(x) > xTreshold|| abs(theta) > thetaThreshold){
+if(abs(x) > xTreshold || abs(theta) > thetaThreshold || EpochIteration > MaxStep-1){
 	done = true;
 }else{
 	done = false;
 }
+if(main.Train==true){
 traceln("Checking whether the pole angle or the position of the cart are beyond threshold: " + done);
+}
 return done;]]></Body>
 				</Function>
 				<Function AccessType="public" StaticFunction="false">
@@ -1610,23 +1681,37 @@ return done;]]></Body>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[traceln("");
+					<Body><![CDATA[if(main.Train==true){
+traceln("");
 traceln("Resetting the Cartpole environment for a new round");
+}
 temp = 0;
 thetaAcc = 0;
 xAcc = 0;
 cosTheta = 0;
 sinTheta = 0;
-theta = uniform(-0.05, 0.05);
-x = uniform(-0.05, 0.05);
-xDot = uniform(-0.05, 0.05);
-thetaDot = uniform(-0.05, 0.05);
+double randLim = 0.05;
+theta = uniform(-randLim, randLim);
+x = uniform(-randLim, randLim);
+xDot = uniform(-randLim, randLim);
+thetaDot = uniform(-randLim, randLim);
+/*
+theta = 0;
+x = 0;
+xDot = 0;
+thetaDot = 0;
+*/
+if(main.Train==true){
 traceln("The initial value of x (position of the cart) is " + x);
 traceln("The initial value of theta (angle of the pole) is " + theta);
 traceln("The initial value of xDot (velocity of the cart) is " + xDot);
 traceln("The initial value of thetaDot (velocity of the pole) is " + thetaDot);
+}
 Epoch += 1;
+EpochIteration = 0;
+if(main.Train==true){
 traceln("Entering epoch " +Epoch);
+}
 ObservationEnc oe = new ObservationEnc(x, theta, xDot, thetaDot);
 return (O) oe;]]></Body>
 				</Function>
@@ -1677,8 +1762,10 @@ return (Mdp) main.mdps.get(main.mdps.size());]]></Body>
 						<Name><![CDATA[action]]></Name>
 						<Type><![CDATA[Object]]></Type>
 					</Parameter>
-					<Body><![CDATA[traceln("The chosen action is " + action);
+					<Body><![CDATA[if(main.Train==true){
+traceln("The chosen action is " + action);
 traceln("The physical step function updates the state of the Cartpole and encodes the observation");
+}
 int action1 = (Integer) action;
 if (action1 == 1){
 	force = Force_Mag;
@@ -1687,7 +1774,9 @@ if (action1 == 1){
 }else{
 	traceln("!!!The action value in the physicalStep function is not handeled correctely!!!");
 }
+if(main.Train==true){
 traceln("Based on the chosen action, we apply a force equal to " + force);
+}
 cosTheta = cos(theta);
 sinTheta = sin(theta);
 temp = (force + cart.pole.Pole_Mass_Length * thetaDot * thetaDot * sinTheta) / cart.Total_Mass;
@@ -1699,10 +1788,12 @@ theta += Tau * thetaDot;
 thetaDot += Tau * thetaAcc;
 cart.pole.presentation.setRotation(theta);
 cart.presentation.setX(Displacement_Coef * x);
+if(main.Train==true){
 traceln("The new value of x (position of the cart) is " + x);
 traceln("The new value of theta (angle of the pole) is " + theta);
 traceln("The new value of xDot (velocity of the cart) is " + xDot);
 traceln("The new value of thetaDot (velocity of the pole) is " + thetaDot);
+}
 ObservationEnc output = new ObservationEnc(x, xDot, theta, thetaDot);
 return output;]]></Body>
 				</Function>
@@ -1823,7 +1914,7 @@ return output;]]></Body>
 				<EmbeddedObjectPresentation>
 					<Id>1532598849002</Id>
 					<Name><![CDATA[cart_presentation]]></Name>
-					<X>340</X><Y>-30</Y>
+					<X>270</X><Y>-30</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1956,7 +2047,12 @@ return output;]]></Body>
 			<Id>1532438531949</Id>
 			<Name><![CDATA[Simulation]]></Name>
 			<ClientAreaTopLeft><X>0</X><Y>0</Y></ClientAreaTopLeft>
+			<Import><![CDATA[import java.io.File;]]></Import>
 			<CommandLineArguments><![CDATA[]]></CommandLineArguments>
+			<InitialSetupCode><![CDATA[File f = new File("logs/application.log");
+    	if(f.exists()) {
+    		f.delete();
+    	}]]></InitialSetupCode>
 			<MaximumMemory>512</MaximumMemory>
 			<RandomNumberGenerationType>fixedSeed</RandomNumberGenerationType>
 			<CustomGeneratorCode>new Random()</CustomGeneratorCode>
@@ -2133,7 +2229,7 @@ created in AnyLogic instead of loading in the environment from OpenAI which is u
 We have also not yet implemented the last part of the Cartpole.java file which will construct and load a 
 trained version of the cartpole which has already learned to perform the task-
 */
-
+import java.io.File;
 import java.io.IOException;
 //Needed to define the training
 import org.deeplearning4j.rl4j.space.Box;
@@ -2166,8 +2262,8 @@ public class CartPoleBegin implements Serializable {
             new QLearning.QLConfiguration(
                     123,    //Random seed -> self-explanatory. There are 2 sources of randomness in the present application, one being the e-greedy policy and the other the random initialisation of the state variables whenever reset is called
                     200,    //Max step By epoch -> this gives the maximum number of steps in an "epoch", i.e. in one round of the "game". In the case of cartpole, an epoch ends when the pole "falls over" (exceeds the threshold for theta), when the cart moves outside of the threshold for x, or when the algorithm has kept the pole upright for 200 steps
-                    10, 		//Max step --> this is the overall maximum number of steps that can be taken in one round of training consisting of multiple "epochs"
-                    10, 		//Max size of experience replay --> this is the maximum size of the "experience", i.e. the memory of past results which is stored and used in random batches to update the current network
+                    1500, 		//Max step --> this is the overall maximum number of steps that can be taken in one round of training consisting of multiple "epochs"
+                    1500, 		//Max size of experience replay --> this is the maximum size of the "experience", i.e. the memory of past results which is stored and used in random batches to update the current network
                     32,     //size of batches --> this is the size of the batches of experiences (i.e. combinations of prior state, action, posterior state and reward) which are used at each step for updating the current neural network
                     500,    //target update (hard) --> This is the frequency with which the target network (the one which will hopefully learn the optimal policy) is updated. We are performing a hard update meaning that every 500 steps, the current network is copied to become the new target network
                     10,     //num step noop warmup --> This is the number of steps at the beginning for which we simply take random actions in order to build up a buffer of experiences
@@ -2189,7 +2285,7 @@ public class CartPoleBegin implements Serializable {
             .l2(0.001).updater(new Adam(0.0005)).numHiddenNodes(16).numLayer(3).build();
 
     public static void CartPoleBegin(Main main) throws IOException {
-
+    	
         //Here we are creating the data manager intended to save the training data
         DataManager manager = new DataManager(true);
         
@@ -2204,6 +2300,7 @@ public class CartPoleBegin implements Serializable {
         try {
         	traceln("We create the MDP Cartpole agent and add it to the environment");
         	myCartPole = main.createMDP();
+        	myCartPole.MaxStep = CARTPOLE_QL.getMaxEpochStep();
         	traceln("Agent created successfully");
         	traceln("");
         } catch (RuntimeException e){
@@ -2339,13 +2436,31 @@ import org.nd4j.linalg.learning.config.Adam;
 
 public class TrainedCartPole implements Serializable {
 
+    public static QLearning.QLConfiguration CARTPOLE_QL =
+            new QLearning.QLConfiguration(
+                    123,    //Random seed -> self-explanatory. There are 2 sources of randomness in the present application, one being the e-greedy policy and the other the random initialisation of the state variables whenever reset is called
+                    200,    //Max step By epoch -> this gives the maximum number of steps in an "epoch", i.e. in one round of the "game". In the case of cartpole, an epoch ends when the pole "falls over" (exceeds the threshold for theta), when the cart moves outside of the threshold for x, or when the algorithm has kept the pole upright for 200 steps
+                    150000, 		//Max step --> this is the overall maximum number of steps that can be taken in one round of training consisting of multiple "epochs"
+                    150000, 		//Max size of experience replay --> this is the maximum size of the "experience", i.e. the memory of past results which is stored and used in random batches to update the current network
+                    32,     //size of batches --> this is the size of the batches of experiences (i.e. combinations of prior state, action, posterior state and reward) which are used at each step for updating the current neural network
+                    500,    //target update (hard) --> This is the frequency with which the target network (the one which will hopefully learn the optimal policy) is updated. We are performing a hard update meaning that every 500 steps, the current network is copied to become the new target network
+                    10,     //num step noop warmup --> This is the number of steps at the beginning for which we simply take random actions in order to build up a buffer of experiences
+                    0.01,   //reward scaling --> rewards are scaled by this factor before being fed into the network.
+                    0.99,   //gamma --> this is the discount factor which is applied to expected future rewards in calculating the q-value of a given state
+                    1.0,    //td-error clipping --> Error clipping is used to prevent outliers from having too much weight in updating the network. "Extreme" observations are rescaled using this parameter. 
+                    0.1f,   //min epsilon --> This is the value to which the parameter epsilon will eventually converge over time. It starts off at a higher value to ensure more exploration in initial stages
+                    1000,   //num step for eps greedy anneal --> this sets the speed at which epsilon declines from its initial value to its minimum set above.
+                    true    //double DQN --> We choose whether or not we wish to use the Double DQN algorithm (as opposed to "simple" DQN).
+            );
+	
     public static void loadCartpole(Main main) throws IOException {
-
         //Create the new CartPole
     	Mdp TrainedCart = null;
         try {
         	traceln("We create a new Cartpole agent and add it to the environment");
         	TrainedCart = main.createMDP();
+        	TrainedCart.MaxStep = CARTPOLE_QL.getMaxEpochStep();
+        	TrainedCart.Iteration = 0;
         	traceln("Agent created successfully");
         	traceln("");
         } catch (RuntimeException e){
@@ -2358,14 +2473,15 @@ public class TrainedCartPole implements Serializable {
         //run the agent for i epochs (rounds) and observe the rewards
         traceln("Starting simulation of the trained agent");
         double rewards = 0;
-        for (int i = 0; i < 1000; i++) {
+        double nTests = 3;
+        for (int i = 0; i < nTests; i++) {
         	TrainedCart.reset();
             double reward = pol2.play(TrainedCart);
             rewards += reward;
             traceln("The cumulative reward is " + rewards);
         }
 
-        traceln("The average reward for a trained epoch is " + rewards/1000);
+        traceln("The average reward for a trained epoch is " + rewards/nTests);
 
     }
 
